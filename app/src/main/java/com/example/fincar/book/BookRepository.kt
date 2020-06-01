@@ -50,7 +50,7 @@ class BookRepository {
             }
 
             override fun onFailure(failureMessage: String) {
-                Toast.makeText(App.getInstance(),failureMessage,Toast.LENGTH_LONG).show()
+//                Toast.makeText(App.getInstance(),failureMessage,Toast.LENGTH_LONG).show()
             }
 
         })

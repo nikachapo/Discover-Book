@@ -1,6 +1,6 @@
 package com.example.fincar.ui.home
 
-import android.util.Log.d
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import com.example.fincar.book.BookModel
 import com.example.fincar.book.BookRepository
 
-private const val TAG = "BookViewModel"
 class BookViewModel(q: String?) : ViewModel() {
 
     private val repository: BookRepository =
@@ -26,7 +25,6 @@ class BookViewModel(q: String?) : ViewModel() {
     }
 
     fun search(q: String?) {
-        d(TAG,"search($q)")
         if (q != null) searchStringLive.value = q
     }
 }

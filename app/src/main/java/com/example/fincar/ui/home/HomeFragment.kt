@@ -17,82 +17,59 @@ import com.example.fincar.App
 import com.example.fincar.R
 import com.example.fincar.book.BookAdapter
 import com.example.fincar.book.BookModel
+import com.example.fincar.ui.BaseFragment
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
-class HomeFragment : Fragment() {
-    private lateinit var viewModel: BookViewModel
-    private var booksAdapter: BookAdapter? = null
-    private lateinit var recyclerView: RecyclerView
+class HomeFragment : BaseFragment() {
     private lateinit var searchEditText: EditText
     private lateinit var searchButton: Button
     private var lastSearchedQuery = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if(savedInstanceState!=null){
-            lastSearchedQuery = savedInstanceState.getString(EXTRA_TITLE,"")
+        if (savedInstanceState != null) {
+            lastSearchedQuery = savedInstanceState.getString(EXTRA_TITLE, "")
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
+    override fun getResourceId() = R.layout.fragment_home
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(lastSearchedQuery.isNotEmpty()) searchBookWithQuery(lastSearchedQuery, true)
+        if (lastSearchedQuery.isNotEmpty()){
+            childFragmentManager.beginTransaction()
+                .replace(R.id.booksListContainer, BooksListFragment(lastSearchedQuery,true))
+                .commit()
+        }
         initViews(view)
     }
 
     private fun initViews(view: View) {
-        recyclerView = view.recyclerView
-        recyclerView.layoutManager = GridLayoutManager(context, 2)
-
         searchEditText = view.searchEditText
-
         searchButton = view.searchButton
+
         searchButton.setOnClickListener {
             val searchText = searchEditText.text.toString().trim()
             if (searchText.isEmpty()) {
                 Toast.makeText(App.getInstance(), "Enter search text", Toast.LENGTH_LONG).show()
-            } else searchBookWithQuery(searchText, false)
+            } else {
+                lastSearchedQuery = searchText
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.booksListContainer, BooksListFragment(searchText,false))
+                    .commit()
+            }
         }
 
     }
-
-
-    private fun searchBookWithQuery(queryString: String, queryIsSaved: Boolean) {
-        val factory =
-            BookViewModelFactory(queryString)
-        viewModel = ViewModelProvider(this, factory).get(BookViewModel::class.java)
-
-        if(!queryIsSaved) {
-            viewModel.search(queryString)
-        }
-
-        lastSearchedQuery = queryString
-
-        viewModel.bookLiveData.observe(viewLifecycleOwner,
-            Observer { books ->
-                d("Main",books.toString())
-                booksAdapter = BookAdapter(context, books as ArrayList<BookModel>)
-                recyclerView.adapter = booksAdapter
-            })
-    }
-
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if(lastSearchedQuery.isNotEmpty()){
+        if (lastSearchedQuery.isNotEmpty()) {
             outState.putString(EXTRA_TITLE, lastSearchedQuery)
         }
     }
 
-    companion object{
+    companion object {
         private const val EXTRA_TITLE = "extra-title"
     }
 }

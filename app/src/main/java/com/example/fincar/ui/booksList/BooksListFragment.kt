@@ -1,11 +1,7 @@
-package com.example.fincar.ui.home
+package com.example.fincar.ui.booksList
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,10 +12,12 @@ import com.example.fincar.book.BookAdapter
 import com.example.fincar.book.BookModel
 import com.example.fincar.ui.BaseFragment
 
-class BooksListFragment(private val query: String, private val isQuerySaved: Boolean)
+class BooksListFragment(private val query: String)
     : BaseFragment() {
 
-    constructor():this("",false)
+    constructor():this("")
+
+    var isQuerySaved: Boolean = false
 
     private lateinit var viewModel: BookViewModel
     private var booksAdapter: BookAdapter? = null

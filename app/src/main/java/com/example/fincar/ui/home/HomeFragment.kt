@@ -1,29 +1,26 @@
 package com.example.fincar.ui.home
 
 import android.os.Bundle
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.fincar.App
 import com.example.fincar.R
-import com.example.fincar.book.BookAdapter
-import com.example.fincar.book.BookModel
 import com.example.fincar.ui.BaseFragment
+import com.example.fincar.ui.booksList.BooksListFragment
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class HomeFragment : BaseFragment() {
     private lateinit var searchEditText: EditText
     private lateinit var searchButton: Button
     private var lastSearchedQuery = ""
+
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,15 +29,31 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        homeViewModel.getBooksListFragmentLiveData().observe(viewLifecycleOwner, Observer {
+            if (lastSearchedQuery.isNotEmpty()) {
+                it.isQuerySaved = true
+                childFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.booksListContainer,
+                        it
+                    )
+                    .commit()
+            }
+        })
+
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun getResourceId() = R.layout.fragment_home
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (lastSearchedQuery.isNotEmpty()){
-            childFragmentManager.beginTransaction()
-                .replace(R.id.booksListContainer, BooksListFragment(lastSearchedQuery,true))
-                .commit()
-        }
         initViews(view)
     }
 
@@ -54,9 +67,9 @@ class HomeFragment : BaseFragment() {
                 Toast.makeText(App.getInstance(), "Enter search text", Toast.LENGTH_LONG).show()
             } else {
                 lastSearchedQuery = searchText
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.booksListContainer, BooksListFragment(searchText,false))
-                    .commit()
+                val booksListFragment = BooksListFragment(searchText)
+                booksListFragment.isQuerySaved = false
+                homeViewModel.setFragment(booksListFragment)
             }
         }
 

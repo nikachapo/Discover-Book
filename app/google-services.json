@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "298642994490",
+    "firebase_url": "https://fincar-91bdd.firebaseio.com",
+    "project_id": "fincar-91bdd",
+    "storage_bucket": "fincar-91bdd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298642994490:android:b651f3089edaa801368c03",
+        "android_client_info": {
+          "package_name": "com.example.fincar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298642994490-4986np106cr3fmc9i64js1hc3br99d1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fincar",
+            "certificate_hash": "a6e39bc3989223da487db650f3a376cf0c236a56"
+          }
+        },
+        {
+          "client_id": "298642994490-c7kdjhdjqhg7mivltuulvq3gsrl7pev5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADv3QL1DNNie-vfIzyj7MhWyksGZt-mEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298642994490-c7kdjhdjqhg7mivltuulvq3gsrl7pev5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

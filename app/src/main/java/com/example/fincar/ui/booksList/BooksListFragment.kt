@@ -1,6 +1,7 @@
 package com.example.fincar.ui.booksList
 
 import android.os.Bundle
+import android.util.Log.d
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,10 +13,9 @@ import com.example.fincar.book.BookAdapter
 import com.example.fincar.book.BookModel
 import com.example.fincar.ui.BaseFragment
 
-class BooksListFragment(private val query: String)
-    : BaseFragment() {
+class BooksListFragment(private val query: String) : BaseFragment() {
 
-    constructor():this("")
+    constructor() : this("")
 
     var isQuerySaved: Boolean = false
 
@@ -33,19 +33,24 @@ class BooksListFragment(private val query: String)
     }
 
     private fun searchBookWithQuery(queryString: String, queryIsSaved: Boolean) {
-        val factory =
-            BookViewModelFactory(queryString)
-        viewModel = ViewModelProvider(this, factory).get(BookViewModel::class.java)
+        val parent = parentFragment
+        if (parent != null) {
+            val factory =
+                BookViewModelFactory(queryString)
+            viewModel = ViewModelProvider(parent, factory).get(BookViewModel::class.java)
 
-        if (!queryIsSaved) {
-            viewModel.search(queryString)
+            if (!queryIsSaved) {
+                viewModel.search(queryString)
+            }
+
+            viewModel.bookLiveData.observe(parent.viewLifecycleOwner,
+                Observer { books ->
+                    d("BooksListFragment", " booksLivedata.Observe()")
+                    booksAdapter = BookAdapter(context, books as ArrayList<BookModel>)
+                    recyclerView.adapter = booksAdapter
+                })
+
         }
-
-        viewModel.bookLiveData.observe(viewLifecycleOwner,
-            Observer { books ->
-                booksAdapter = BookAdapter(context, books as ArrayList<BookModel>)
-                recyclerView.adapter = booksAdapter
-            })
     }
 
 }

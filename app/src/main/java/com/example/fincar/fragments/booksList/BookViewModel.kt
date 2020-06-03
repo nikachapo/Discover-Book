@@ -1,4 +1,4 @@
-package com.example.fincar.ui.booksList
+package com.example.fincar.fragments.booksList
 
 
 import androidx.lifecycle.LiveData
@@ -10,21 +10,21 @@ import com.example.fincar.book.BookRepository
 
 class BookViewModel(q: String?) : ViewModel() {
 
-    private val repository: BookRepository =
-        BookRepository()
+    private var repository: BookRepository? = null
     private val searchStringLive: MutableLiveData<String> = MutableLiveData()
-    val bookLiveData: LiveData<List<BookModel>>
+    val allBooksLiveData: LiveData<List<BookModel>>
 
     init {
+        repository = BookRepository(null)
 
         if (q != null) search(q)
-
-        bookLiveData = Transformations
-            .switchMap(searchStringLive) { input -> repository.getBooks(input.toString()) }
-
+        allBooksLiveData = Transformations
+            .switchMap(searchStringLive) { input -> repository!!.getBooks(input.toString()) }
     }
 
     fun search(q: String?) {
         if (q != null) searchStringLive.value = q
     }
+
+
 }

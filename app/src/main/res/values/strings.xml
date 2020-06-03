@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FinCar</string>
+    <string name="app_name">Discover Book</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_starred">Starred</string>
@@ -8,4 +8,22 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="go_to_pdf">Go to PDF</string>
+    <string name="published_by">Published by:</string>
+    <string name="publish_date">Publish date:</string>
+    <string name="authors">Authors</string>
+    <string name="language">Language</string>
+    <string name="description">Description</string>
+    <string name="category">Category</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone number</string>
+    <string name="age">Age</string>
+    <string name="birth_date">Birth date</string>
+    <string name="choose_date">Choose date</string>
+    <string name="location">Location</string>
+    <string name="choose_location">Choose location</string>
+    <string name="save">Save</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="edit">Edit</string>
 </resources>

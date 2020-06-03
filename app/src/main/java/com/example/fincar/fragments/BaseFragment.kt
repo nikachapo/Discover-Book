@@ -1,4 +1,4 @@
-package com.example.fincar.ui
+package com.example.fincar.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

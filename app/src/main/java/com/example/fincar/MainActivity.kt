@@ -1,11 +1,16 @@
 package com.example.fincar
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import com.example.fincar.ui.home.HomeFragment
-import com.example.fincar.ui.profile.ProfileFragment
-import com.example.fincar.ui.starred.StarredBooksFragment
+import com.example.fincar.adapters.ViewPagerAdapter
+import com.example.fincar.firebase.FirebaseDbHelper
+import com.example.fincar.fragments.search_books.SearchBooksFragment
+import com.example.fincar.fragments.profile.ProfileFragment
+import com.example.fincar.fragments.starred.StarredBooksFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -17,12 +22,31 @@ class MainActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.viewPager)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
+        FirebaseDbHelper.checkUser(FirebaseDbHelper.getCurrentUser(),
+        object :
+            FirebaseDbHelper.CheckUserCallBacks {
+            override fun onCancel(errorMessage: String?) {
+                showToast(applicationContext, errorMessage!!)
+            }
+
+            override fun onExists() {
+                showToast(applicationContext,"Welcome")
+            }
+
+            override fun onNotFound() {
+                startActivity(Intent(this@MainActivity, RegistrationActivity::class.java))
+            }
+
+        })
+
         val fragments = arrayListOf(
-            HomeFragment(),StarredBooksFragment(), ProfileFragment())
+            SearchBooksFragment(),StarredBooksFragment(), ProfileFragment())
 
-        viewPager.adapter = ViewPagerAdapter(supportFragmentManager,fragments)
+        viewPager.adapter = ViewPagerAdapter(
+            supportFragmentManager,
+            fragments
+        )
 
-        viewPager.offscreenPageLimit = 3
         viewPager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {
 
@@ -48,5 +72,11 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    companion object{
+        fun showToast(context: Context?,message:String?){
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 }

@@ -1,10 +1,13 @@
 package com.example.fincar
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.view.animation.AnimationUtils
+import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -27,10 +30,15 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        splashIcon.animation = AnimationUtils
+            .loadAnimation(applicationContext, R.anim.slide_in_left);
         val currentFirebaseUser = FirebaseAuth.getInstance().currentUser
-        if(currentFirebaseUser == null){
-            showSignInOption()
-        }else startMainActivity()
+
+        Handler().postDelayed(Runnable { /* Create an Intent that will start the LoginActivity. */
+            if(currentFirebaseUser == null){
+                showSignInOption()
+            }else startMainActivity()
+        }, 2000)
     }
 
     private fun startMainActivity() {

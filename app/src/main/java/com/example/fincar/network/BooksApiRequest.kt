@@ -1,6 +1,5 @@
 package com.example.fincar.network
 
-import android.util.Log.d
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,14 +35,12 @@ object BooksApiRequest {
 
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                d(TAG,response.body().toString())
                 if (response.isSuccessful) requestCallBacks.onSuccess(response.body().toString())
                 else if (response.code() == 404)
                     requestCallBacks.onFailure("No books found")
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
-                d(TAG,t.toString())
                 requestCallBacks.onFailure(t.toString())
             }
 

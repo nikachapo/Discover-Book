@@ -1,42 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/itemRootLayout"
-    android:layout_marginTop="16dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
-    app:cardElevation="8dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:padding="16dp"
+    <data>
+
+        <variable
+            name="bookItem"
+            type="com.example.fincar.book.BookModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/itemRootLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/button_selector">
-        <ImageView
-            android:id="@+id/itemBookImage"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            tools:src="@mipmap/ic_launcher"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp">
 
-        <TextView
-            android:layout_marginTop="8dp"
-            android:id="@+id/itemTitleText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="aaaaaaaaaaaaaaaaaaaaaaaaa"
-            android:textSize="16sp"
-            android:gravity="center_horizontal"
-            android:textStyle="bold"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/itemAuthorsText"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="bbbbbbbbbbbbbbbbbbbbbbbbbb"/>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/bookImageVIew"
+                imageFromUrl="@{bookItem.photoUrl}"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                tools:src="@mipmap/ic_launcher"
+                android:transitionName="imageTransition" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{bookItem.title}"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Title"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{bookItem.authors}"
+                android:textColor="@android:color/black"
+                tools:text="Authors"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,4 +1,4 @@
-package com.example.fincar
+package com.example.fincar.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.fincar.book.BookModel
-import com.example.fincar.book.BookRepository
+import com.example.fincar.book_db.BookModel
+import com.example.fincar.book_db.BookRepository
 
 class BookViewModel(q: String?) : ViewModel() {
 

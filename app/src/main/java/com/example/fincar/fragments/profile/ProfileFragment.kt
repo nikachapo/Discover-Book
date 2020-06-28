@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.fincar.EXTRA_USER
-import com.example.fincar.MainActivity
-import com.example.fincar.RegistrationActivity
+import com.example.fincar.Tools.showToast
+import com.example.fincar.activities.EXTRA_USER
+import com.example.fincar.activities.RegistrationActivity
 import com.example.fincar.databinding.FragmentProfileBinding
-import com.example.fincar.firebase.FirebaseDbHelper
+import com.example.fincar.network.firebase.FetchUserDataCallbacks
+import com.example.fincar.network.firebase.FirebaseDbHelper
 
 class ProfileFragment : Fragment() {
 
@@ -22,7 +23,7 @@ class ProfileFragment : Fragment() {
     ): View? {
         val layoutInflater = LayoutInflater.from(container?.context)
         FirebaseDbHelper.getUserWithUid(FirebaseDbHelper.getCurrentUser().uid,
-            object : FirebaseDbHelper.ReceiveUserCallbacks {
+            object : FetchUserDataCallbacks {
                 override fun onReceive(userModel: UserModel?) {
                     binding.userModel = userModel
                     binding.editButton.setOnClickListener {
@@ -31,8 +32,8 @@ class ProfileFragment : Fragment() {
                     }
                 }
 
-                override fun onError(message: String?) {
-                    MainActivity.showToast(context, message)
+                override fun onError(message: String) {
+                    showToast(context!!, message)
                 }
             })
         binding = FragmentProfileBinding.inflate(layoutInflater, container, false)

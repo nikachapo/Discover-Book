@@ -3,8 +3,8 @@ package com.example.fincar.fragments.starred
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.fincar.book.BookModel
-import com.example.fincar.book.BookRepository
+import com.example.fincar.book_db.BookModel
+import com.example.fincar.book_db.BookRepository
 
 class StarredBooksViewModel(application: Application) : AndroidViewModel(application) {
     private var repository: BookRepository? = null

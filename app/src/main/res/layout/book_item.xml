@@ -7,7 +7,7 @@
 
         <variable
             name="bookItem"
-            type="com.example.fincar.book.BookModel" />
+            type="com.example.fincar.book_db.BookModel" />
     </data>
 
     <androidx.cardview.widget.CardView

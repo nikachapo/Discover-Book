@@ -6,13 +6,13 @@
     <data>
         <variable
             name="book"
-            type="com.example.fincar.book.BookModel" />
+            type="com.example.fincar.book_db.BookModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".BookDetailsActivity">
+        tools:context=".activities.book_details.BookDetailsActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:padding="8dp"
         android:background="@drawable/activity_background"
-        tools:context=".RegistrationActivity">
+        tools:context=".activities.RegistrationActivity">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailInputLayout"

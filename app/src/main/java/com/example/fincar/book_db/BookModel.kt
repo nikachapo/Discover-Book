@@ -1,4 +1,4 @@
-package com.example.fincar.book
+package com.example.fincar.book_db
 
 import android.os.Parcelable
 import androidx.room.Entity

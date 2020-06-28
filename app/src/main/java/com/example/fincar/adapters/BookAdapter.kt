@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fincar.BookDetailsActivity
-import com.example.fincar.EXTRA_BOOK
-import com.example.fincar.book.BookModel
+import com.example.fincar.activities.book_details.BookDetailsActivity
+import com.example.fincar.activities.book_details.EXTRA_BOOK
+import com.example.fincar.book_db.BookModel
 import com.example.fincar.databinding.BookItemBinding
 
 

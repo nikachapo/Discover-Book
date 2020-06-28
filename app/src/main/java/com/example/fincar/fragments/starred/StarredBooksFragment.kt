@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fincar.R
-import com.example.fincar.book.BookModel
+import com.example.fincar.book_db.BookModel
 import com.example.fincar.fragments.BaseFragment
 import com.example.fincar.fragments.booksList.BooksListFragment
 

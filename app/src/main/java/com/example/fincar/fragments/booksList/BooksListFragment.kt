@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.fincar.R
 import com.example.fincar.adapters.BookAdapter
-import com.example.fincar.book.BookModel
+import com.example.fincar.book_db.BookModel
 import com.example.fincar.fragments.BaseFragment
 
 class BooksListFragment(private val booksList:ArrayList<BookModel>) : BaseFragment() {

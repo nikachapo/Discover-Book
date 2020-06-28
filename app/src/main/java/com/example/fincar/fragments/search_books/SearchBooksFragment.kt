@@ -7,24 +7,25 @@ import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fincar.R
-import com.example.fincar.book.BookModel
+import com.example.fincar.book_db.BookModel
 import com.example.fincar.fragments.BaseFragment
 import com.example.fincar.fragments.booksList.BookViewModel
 import com.example.fincar.fragments.booksList.BookViewModelFactory
 import com.example.fincar.fragments.booksList.BooksListFragment
-import kotlinx.android.synthetic.main.fragment_search_books.*
 import kotlinx.android.synthetic.main.fragment_search_books.view.*
 import kotlinx.android.synthetic.main.fragment_search_books.view.mainTitle
 
 class SearchBooksFragment() : BaseFragment() {
+
     private lateinit var viewModel: BookViewModel
+
     private lateinit var searchEditText: EditText
     private lateinit var searchButton: Button
     private lateinit var progressBar:ProgressBar
     private lateinit var mainTitle:TextView
     private lateinit var mainIcon:ImageView
-    private var lastSearchedQuery = ""
 
+    private var lastSearchedQuery = ""
 
     override fun getResourceId() = R.layout.fragment_search_books
 
@@ -65,7 +66,7 @@ class SearchBooksFragment() : BaseFragment() {
 
         searchButton.setOnClickListener {
             if(searchEditText.visibility == View.VISIBLE){
-                searchEditText.animation = AnimationUtils.loadAnimation(context, R.anim.slide_out_right);
+                searchEditText.animation = AnimationUtils.loadAnimation(context, R.anim.slide_out_right)
                 searchEditText.visibility = View.INVISIBLE
                 val searchText = searchEditText.text.toString().trim()
                 if (searchText.isEmpty()) {
@@ -76,7 +77,7 @@ class SearchBooksFragment() : BaseFragment() {
                     searchBookWithQuery(searchText)
                 }
             }else{
-                searchEditText.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left);
+                searchEditText.animation = AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
                 searchEditText.visibility = View.VISIBLE
             }
         }

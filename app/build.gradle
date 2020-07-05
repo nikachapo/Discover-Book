@@ -80,6 +80,9 @@ android {
         implementation 'com.google.firebase:firebase-auth:19.3.1'
         implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
 
+        //Firebase Storage
+        implementation 'com.google.firebase:firebase-storage:19.1.1'
+
         //Glide
         implementation 'com.github.bumptech.glide:glide:4.11.0'
         kapt 'com.github.bumptech.glide:compiler:4.11.0'
@@ -96,6 +99,9 @@ android {
         //KT Coroutines
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+        //lottie animations
+        implementation 'com.airbnb.android:lottie:3.4.1'
 
     }
 }

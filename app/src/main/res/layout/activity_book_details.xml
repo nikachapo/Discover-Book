@@ -6,7 +6,7 @@
     <data>
         <variable
             name="book"
-            type="com.example.fincar.book_db.BookModel" />
+            type="com.example.fincar.bean.book.GoogleBook" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

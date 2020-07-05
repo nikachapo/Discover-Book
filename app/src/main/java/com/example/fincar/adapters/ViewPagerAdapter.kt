@@ -15,5 +15,4 @@ class ViewPagerAdapter(fragmentManager: FragmentManager, private val fragments: 
         return fragments.size
     }
 
-
 }

@@ -1,8 +1,11 @@
 package com.example.fincar.network.firebase;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 
-import com.example.fincar.fragments.profile.UserModel;
+import com.example.fincar.bean.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -13,59 +16,122 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
-public final class FirebaseDbHelper {
-    public static final String USERS_KEY = "users";
+public final class FirebaseDbHelper implements LifecycleObserver {
+    private static final String USERS_KEY = "users";
 
+    private static FirebaseDbHelper instance;
 
-    public static FirebaseUser getCurrentUser() {
+    private DatabaseReference usersReference;
+    private ValueEventListener checkUserListener;
+
+    private DatabaseReference currentUserReference;
+    private ValueEventListener userWithUidListener;
+
+    private FirebaseDbHelper() {
+        usersReference = getReference().child(USERS_KEY);
+        currentUserReference = usersReference.child(getCurrentUser().getUid());
+    }
+
+    public static FirebaseDbHelper getInstance() {
+        if (instance == null) {
+            synchronized (FirebaseDbHelper.class) {
+                if (instance == null) {
+                    instance = new FirebaseDbHelper();
+                }
+            }
+        }
+
+        return instance;
+    }
+
+    public FirebaseUser getCurrentUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
     }
 
-    public static DatabaseReference getReference() {
+    public DatabaseReference getReference() {
         return FirebaseDatabase.getInstance().getReference();
     }
 
-    public static void checkUser(CheckUserCallbacks callbacks) {
-        getReference().child(USERS_KEY)
+    public void checkUser(CheckUserCallbacks callbacks) {
+        initCheckUserListener(callbacks);
+                usersReference
                 .child(getCurrentUser().getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if(dataSnapshot.exists()){
-                            callbacks.onExists();
-                        }else callbacks.onNotFound();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        callbacks.onError(databaseError.getMessage());
-                    }
-                });
+                .addValueEventListener(checkUserListener);
 
     }
 
-    public static void registerUser(UserModel userModel, RegistrationCallbacks registrationCallbacks){
-        getReference().child(USERS_KEY)
-                .child(getCurrentUser().getUid())
+    private void initCheckUserListener(CheckUserCallbacks callbacks) {
+        if (checkUserListener == null) {
+            checkUserListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        callbacks.onExists();
+                    } else callbacks.onNotFound();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    callbacks.onError(databaseError.getMessage());
+                }
+            };
+
+        }
+    }
+
+    public void registerUser(@NonNull UserModel userModel,
+                             RegistrationCallbacks registrationCallbacks) {
+
+        currentUserReference
                 .setValue(userModel)
-                .addOnSuccessListener(v -> registrationCallbacks.onSuccessRegistration())
-                .addOnFailureListener(e -> registrationCallbacks.onError(Objects.requireNonNull(e.getMessage())));
+                .addOnSuccessListener(v ->
+                        registrationCallbacks.onSuccessRegistration())
+                .addOnFailureListener(e ->
+                        registrationCallbacks.onError(Objects.requireNonNull(e.getMessage())));
+
     }
 
-    public static void getUserWithUid(String uId, FetchUserDataCallbacks fetchUserDataCallbacks){
-        getReference().child(USERS_KEY)
-                .child(uId)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
-                        fetchUserDataCallbacks.onReceive(userModel);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        fetchUserDataCallbacks.onError(databaseError.getMessage());
-                    }
-                });
+    public void getCurrentUser(FetchUserDataCallbacks fetchUserDataCallbacks) {
+        initUserWithUidListener(fetchUserDataCallbacks);
     }
+
+    private void initUserWithUidListener(FetchUserDataCallbacks fetchUserDataCallbacks) {
+        if (userWithUidListener == null) {
+            userWithUidListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                    fetchUserDataCallbacks.onReceive(userModel);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    fetchUserDataCallbacks.onError(databaseError.getMessage());
+                }
+            };
+        }
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    public void removeListeners() {
+        if (usersReference != null && checkUserListener != null) {
+            usersReference.removeEventListener(checkUserListener);
+        }
+
+        if (currentUserReference != null && userWithUidListener != null) {
+            currentUserReference.removeEventListener(userWithUidListener);
+        }
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    public void addListeners() {
+        if (usersReference != null && checkUserListener != null) {
+            usersReference.addListenerForSingleValueEvent(checkUserListener);
+        }
+
+        if (currentUserReference != null && userWithUidListener != null) {
+            currentUserReference.addListenerForSingleValueEvent(userWithUidListener);
+        }
+    }
+
 }

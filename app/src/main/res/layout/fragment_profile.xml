@@ -7,7 +7,7 @@
 
         <variable
             name="userModel"
-            type="com.example.fincar.fragments.profile.UserModel" />
+            type="com.example.fincar.bean.UserModel" />
     </data>
 
     <LinearLayout

@@ -7,17 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 
 import com.example.fincar.R
 import com.example.fincar.adapters.BookAdapter
-import com.example.fincar.book_db.BookModel
+import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.fragments.BaseFragment
 
-class BooksListFragment(private val booksList:ArrayList<BookModel>) : BaseFragment() {
+class BooksListFragment(private val booksList:ArrayList<GoogleBook>) : BaseFragment() {
 
     constructor() : this(arrayListOf())
 
     private lateinit var recyclerView: RecyclerView
 
     override fun getResourceId() = R.layout.fragment_books_list
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,7 +27,5 @@ class BooksListFragment(private val booksList:ArrayList<BookModel>) : BaseFragme
             booksList
         )
     }
-
-
 
 }

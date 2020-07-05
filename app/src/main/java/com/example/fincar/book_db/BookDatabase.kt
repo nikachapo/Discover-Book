@@ -4,9 +4,10 @@ import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.fincar.bean.book.GoogleBook
 
 
-@Database(entities = [BookModel::class], version = 1)
+@Database(entities = [GoogleBook::class], version = 1, exportSchema = false)
 abstract class BookDatabase : RoomDatabase() {
     abstract fun noteDao(): BookDao
 

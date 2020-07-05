@@ -5,14 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.fincar.book_db.BookModel
+import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.book_db.BookRepository
 
 class BookViewModel(q: String?) : ViewModel() {
 
     private var repository: BookRepository? = null
     private val searchStringLive: MutableLiveData<String> = MutableLiveData()
-    val allBooksLiveData: LiveData<List<BookModel>>
+    val allBooksLiveData: LiveData<List<GoogleBook>>
 
     init {
         repository = BookRepository(null)

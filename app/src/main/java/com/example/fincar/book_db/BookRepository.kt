@@ -4,8 +4,9 @@ import android.app.Application
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.fincar.Tools.showToast
+import com.example.fincar.app.Tools.showToast
 import com.example.fincar.app.App
+import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.network.books_api.BooksApiRequest
 import com.example.fincar.network.books_api.RequestCallBacks
 import org.json.JSONException
@@ -15,9 +16,9 @@ import org.json.JSONObject
 class BookRepository(application: Application?) {
     private var bookDao: BookDao? = null
 
-    private val books = MutableLiveData<List<BookModel>>()
+    private val books = MutableLiveData<List<GoogleBook>>()
 
-    fun getBooks(q: String): MutableLiveData<List<BookModel>> {
+    fun getBooks(q: String): MutableLiveData<List<GoogleBook>> {
         searchBook(q)
         return books
     }
@@ -29,19 +30,19 @@ class BookRepository(application: Application?) {
         }
     }
 
-    fun insert(book: BookModel) {
+    fun insert(googleBook: GoogleBook) {
         AsyncTask.execute {
-            bookDao?.insert(book)
+            bookDao?.insert(googleBook)
         }
     }
 
-    fun delete(book: BookModel) {
+    fun delete(googleBook: GoogleBook) {
         AsyncTask.execute {
-            bookDao?.delete(book)
+            bookDao?.delete(googleBook)
         }
     }
 
-    fun getStarredBooks(): LiveData<List<BookModel>>? {
+    fun getStarredBooks(): LiveData<List<GoogleBook>>? {
         return bookDao?.getAllBooks()
     }
 
@@ -68,7 +69,7 @@ class BookRepository(application: Application?) {
     ) {
         val rootJsonObject = JSONObject(successJson)
         // Get the JSONArray of books items.
-        val booksList = ArrayList<BookModel>()
+        val booksList = ArrayList<GoogleBook>()
         val totalItems = rootJsonObject.getInt("totalItems")
         if (totalItems != 0) {
             val itemsArray = rootJsonObject.getJSONArray("items")
@@ -113,7 +114,7 @@ class BookRepository(application: Application?) {
 //                if (isPdfAvailable) pdfLink = pdfJSONObject.getString("acsTokenLink")
 
                     booksList.add(
-                        BookModel(
+                        GoogleBook(
                             id, title, description, publisher, published, authors, categories,
                             imgUrl, previewUrl, pageCount, language, isPdfAvailable, pdfLink
                         )

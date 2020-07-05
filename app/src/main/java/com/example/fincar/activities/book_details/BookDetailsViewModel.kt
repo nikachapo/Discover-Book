@@ -2,7 +2,7 @@ package com.example.fincar.activities.book_details
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.fincar.book_db.BookModel
+import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.book_db.BookRepository
 
 class BookDetailsViewModel(application: Application) : AndroidViewModel(application) {
@@ -11,12 +11,12 @@ class BookDetailsViewModel(application: Application) : AndroidViewModel(applicat
 
     fun getBookCountLiveData(id: String) = repository.getBookCountLiveData(id)
 
-    fun delete(book: BookModel) {
-        repository.delete(book)
+    fun delete(googleBook: GoogleBook) {
+        repository.delete(googleBook)
     }
 
-    fun insert(book: BookModel) {
-        repository.insert(book)
+    fun insert(googleBook: GoogleBook) {
+        repository.insert(googleBook)
     }
 
 }

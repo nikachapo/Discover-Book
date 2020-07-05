@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fincar.R
-import com.example.fincar.book_db.BookModel
+import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.databinding.ActivityBookDetailsBinding
 
 const val EXTRA_BOOK = "extra-book"
@@ -18,12 +18,12 @@ class BookDetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBookDetailsBinding
     private lateinit var bookDetailsViewModel: BookDetailsViewModel
-    private lateinit var book: BookModel
+    private lateinit var googleBook: GoogleBook
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        book = intent.getParcelableExtra(EXTRA_BOOK) as BookModel
+        googleBook = intent.getParcelableExtra(EXTRA_BOOK) as GoogleBook
 
         bookDetailsViewModel = ViewModelProvider(this).get(BookDetailsViewModel::class.java)
 
@@ -43,11 +43,11 @@ class BookDetailsActivity : AppCompatActivity() {
                 this,
                 R.layout.activity_book_details
             )
-        binding.book = book
+        binding.book = googleBook
     }
 
     private fun checkFavourite() {
-        bookDetailsViewModel.getBookCountLiveData(book.id)?.observe(this, Observer {
+        bookDetailsViewModel.getBookCountLiveData(googleBook.id)?.observe(this, Observer {
             if (it > 0) binding.starButton.isChecked = true
         })
     }
@@ -57,25 +57,25 @@ class BookDetailsActivity : AppCompatActivity() {
 
             if (binding.starButton.isChecked) {
                 binding.starButton.isChecked = false
-                bookDetailsViewModel.delete(book)
+                bookDetailsViewModel.delete(googleBook)
             } else {
                 binding.starButton.isChecked = true
                 binding.starButton.playAnimation()
-                bookDetailsViewModel.insert(book)
+                bookDetailsViewModel.insert(googleBook)
             }
 
         }
 
         binding.detailsBookImage.setOnClickListener {
             //open e-book link in browser
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(book.previewUrl))
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(googleBook.previewUrl))
             startActivity(browserIntent)
         }
     }
 
     private fun setUpActionBar() {
         setSupportActionBar(binding.detailsToolbar)
-        binding.detailsCollapsingLayout.title = book.title
+        binding.detailsCollapsingLayout.title = googleBook.title
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

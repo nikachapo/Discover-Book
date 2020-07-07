@@ -1,12 +1,17 @@
 package com.example.fincar.app
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import com.example.fincar.R
 import com.example.fincar.fragments.DatePickerFragment
+import kotlinx.android.synthetic.main.dialog_layout.*
 
 object Tools {
 
@@ -27,5 +32,29 @@ object Tools {
         val datePicker: DialogFragment = DatePickerFragment()
         datePicker.show(fragmentManager, "date picker")
     }
+
+    fun showDialog(context: Context, title:String, assetName: String){
+        val dialog = Dialog(context)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_layout)
+
+        val params = dialog.window!!.attributes
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+        params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+
+        dialog.window!!.attributes = params
+        dialog.dialogTitleTV.text = title
+
+
+        dialog.dialogAnimationView.setAnimation(assetName)
+
+        dialog.dialogOkButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
 
 }

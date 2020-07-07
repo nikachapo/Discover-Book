@@ -12,6 +12,7 @@ import com.example.fincar.R
 import com.example.fincar.activities.registration.RegistrationActivity
 import com.example.fincar.app.Tools.showToast
 import com.example.fincar.adapters.ViewPagerAdapter
+import com.example.fincar.fragments.home.HomeFragment
 import com.example.fincar.network.firebase.FirebaseDbHelper
 import com.example.fincar.fragments.search_books.SearchBooksFragment
 import com.example.fincar.fragments.profile.ProfileFragment
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         checkUser()
 
         val fragments = arrayListOf(
-            SearchBooksFragment(),StarredBooksFragment(), ProfileFragment())
+            HomeFragment(),StarredBooksFragment(), SearchBooksFragment(), ProfileFragment())
 
         setUpViewPager(fragments)
 
@@ -86,7 +87,8 @@ class MainActivity : AppCompatActivity() {
             val currentItem: Int = when (it.itemId) {
                 R.id.navigation_home -> 0
                 R.id.navigation_starred -> 1
-                R.id.navigation_profile -> 2
+                R.id.navigation_search -> 2
+                R.id.navigation_profile -> 3
                 else -> 0
             }
             viewPager.currentItem = currentItem

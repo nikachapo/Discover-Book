@@ -75,50 +75,41 @@ class BookRepository(application: Application?) {
             val itemsArray = rootJsonObject.getJSONArray("items")
 
             for (i in 0 until itemsArray.length()) {
+                val googleBook = GoogleBook()
                 try {
                     val bookJson = itemsArray.getJSONObject(i)
-                    val id = bookJson.getString("id")
+                    googleBook.id = bookJson.getString("id")
                     val volumeInfo = bookJson.getJSONObject("volumeInfo")
-                    val previewUrl = volumeInfo.getString("previewLink")
+                    googleBook.previewUrl = volumeInfo.getString("previewLink")
+                    googleBook.title = volumeInfo.getString("title")
+                    if (volumeInfo.has("publisher"))
+                        googleBook.publisher = volumeInfo.getString("publisher")
 
-                    val title = volumeInfo.getString("title")
+                    googleBook.publishDate = volumeInfo.getString("publishedDate")
+                    if (volumeInfo.has("description"))
+                        googleBook.description = volumeInfo.getString("description")
+
                     val imageLinksJsonObject = volumeInfo.getJSONObject("imageLinks")
-                    val imgUrl = imageLinksJsonObject.getString("smallThumbnail")
+                    googleBook.photoUrl = imageLinksJsonObject.getString("smallThumbnail")
 
-                    var authors = ""
                     if (volumeInfo.has("authors")) {
                         val authorsJsonArray = volumeInfo.getJSONArray("authors")
-                        authors = authorsJsonArray.join(", ")
+                        googleBook.authors = authorsJsonArray.join(", ")
                     }
 
-                    var categories = ""
                     if (volumeInfo.has("categories")) {
                         val authorsJsonArray = volumeInfo.getJSONArray("categories")
-                        categories = authorsJsonArray.join(", ")
+                        googleBook.categories = authorsJsonArray.join(", ")
                     }
-                    var publisher = ""
-                    if (volumeInfo.has("publisher")) publisher = volumeInfo.getString("publisher")
 
-                    val published = volumeInfo.getString("publishedDate")
-
-                    var description = ""
-                    if (volumeInfo.has("description")) description =
-                        volumeInfo.getString("description")
-
-                    val pageCount = volumeInfo.getInt("pageCount")
-                    val language = volumeInfo.getString("language")
+                    googleBook.pageCount = volumeInfo.getInt("pageCount")
+                    googleBook.language = volumeInfo.getString("language")
                     val accessInfoJSONObject = bookJson.getJSONObject("accessInfo")
                     val pdfJSONObject = accessInfoJSONObject.getJSONObject("pdf")
-                    val isPdfAvailable = pdfJSONObject.getBoolean("isAvailable")
-                    var pdfLink = ""
-//                if (isPdfAvailable) pdfLink = pdfJSONObject.getString("acsTokenLink")
+                    googleBook.isPdfAvailable = pdfJSONObject.getBoolean("isAvailable")
+                    if (googleBook.isPdfAvailable) googleBook.pdfLink = pdfJSONObject.getString("downloadLink")
+                    booksList.add(googleBook)
 
-                    booksList.add(
-                        GoogleBook(
-                            id, title, description, publisher, published, authors, categories,
-                            imgUrl, previewUrl, pageCount, language, isPdfAvailable, pdfLink
-                        )
-                    )
                 } catch (jsonException: JSONException) {
                     //error
                     continue

@@ -2,18 +2,29 @@ package com.example.fincar.fragments.search_books
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AnimationUtils
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.R
+import com.example.fincar.adapters.SuggestionsAdapter
+import com.example.fincar.app.SharedPreferenceUtil
+import com.example.fincar.bean.book.Book
 import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.fragments.BaseFragment
 import com.example.fincar.fragments.booksList.BookViewModel
 import com.example.fincar.fragments.booksList.BookViewModelFactory
 import com.example.fincar.fragments.booksList.BooksListFragment
 import kotlinx.android.synthetic.main.fragment_search_books.view.*
+import kotlinx.android.synthetic.main.search_toolbar_layout.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SearchBooksFragment : BaseFragment() {
 
@@ -21,18 +32,20 @@ class SearchBooksFragment : BaseFragment() {
 
     private lateinit var searchEditText: EditText
     private lateinit var searchButton: Button
-    private lateinit var mainTitle: TextView
-    private lateinit var mainIcon: ImageView
     private lateinit var loadingRootLayout: FrameLayout
+    private lateinit var searchSuggestionRecyclerView: RecyclerView
     private lateinit var loadingAnimationView: LottieAnimationView
     private var lastSearchedQuery = ""
+    private lateinit var suggestions: MutableList<String>
+    private lateinit var suggestionsAdapter: SuggestionsAdapter
 
     override fun getResourceId() = R.layout.fragment_search_books
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        suggestions = SharedPreferenceUtil
+            .getStringSet(SharedPreferenceUtil.KEY_SUGGESTIONS)!!.toMutableList()
         initViews(view)
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -42,12 +55,11 @@ class SearchBooksFragment : BaseFragment() {
 
         initViewModel()
 
-        loadingRootLayout = activity!!.findViewById(R.id.loadingRootLayout)
-        loadingAnimationView = activity!!.findViewById(R.id.loadingAnimationView)
+        loadingRootLayout = requireActivity().findViewById(R.id.loadingRootLayout)
+        loadingAnimationView = requireActivity().findViewById(R.id.loadingAnimationView)
+
 
     }
-
-
 
     private fun initViewModel() {
         val factory = BookViewModelFactory(lastSearchedQuery)
@@ -58,15 +70,13 @@ class SearchBooksFragment : BaseFragment() {
                 childFragmentManager.beginTransaction()
                     .replace(
                         R.id.booksListContainer,
-                        BooksListFragment(books as ArrayList<GoogleBook>)
+                        BooksListFragment(
+                            books as ArrayList<GoogleBook>
+                        )
                     )
                     .commit()
                 loadingRootLayout.visibility = View.GONE
                 loadingAnimationView.cancelAnimation()
-                if (mainTitle.visibility == View.VISIBLE) {
-                    mainIcon.visibility = View.GONE
-                    mainTitle.visibility = View.GONE
-                }
             })
 
     }
@@ -74,36 +84,58 @@ class SearchBooksFragment : BaseFragment() {
     private fun initViews(view: View) {
         searchEditText = view.searchEditText
         searchButton = view.searchButton
-        mainTitle = view.mainTitle
-        mainIcon = view.mainIcon
+        searchSuggestionRecyclerView = view.searchSuggestionRecyclerView
+        searchSuggestionRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
-        searchButton.setOnClickListener {
-            if (searchEditText.visibility == View.VISIBLE) {
+        suggestionsAdapter = SuggestionsAdapter(suggestions,
+            object : SuggestionsAdapter.SuggestionClickListener {
+                override fun onSuggestionClicked(suggestion: String) {
 
-                searchEditText.animation =
-                    AnimationUtils.loadAnimation(context, R.anim.slide_out_right)
-                searchEditText.visibility = View.INVISIBLE
-
-                val searchText = searchEditText.text.toString().trim()
-                if (searchText.isEmpty()) {
-                    Toast.makeText(context, "Enter search text", Toast.LENGTH_LONG).show()
-                } else {
-                    loadingRootLayout.visibility = View.VISIBLE
-                    loadingAnimationView.playAnimation()
-                    lastSearchedQuery = searchText
-                    searchBookWithQuery(searchText)
+                    searchEditText.setText(suggestion)
+                    searchBookWithQuery(suggestion)
                 }
+
+            })
+        searchSuggestionRecyclerView.adapter = suggestionsAdapter
+
+        setListeners()
+    }
+
+    private fun setListeners() {
+        searchButton.setOnClickListener {
+
+            val searchText = searchEditText.text.toString().trim()
+            if (searchText.isEmpty()) {
+                Toast.makeText(context, "Enter search text", Toast.LENGTH_LONG).show()
             } else {
-                searchEditText.animation =
-                    AnimationUtils.loadAnimation(context, R.anim.slide_in_left)
-                searchEditText.visibility = View.VISIBLE
+                loadingRootLayout.visibility = View.VISIBLE
+                loadingAnimationView.playAnimation()
+                lastSearchedQuery = searchText
+                searchBookWithQuery(searchText)
             }
         }
+    }
 
+    override fun onStop() {
+        super.onStop()
+        CoroutineScope(Dispatchers.Default).launch {
+            saveUpdatedSuggestionsSet()
+        }
     }
 
     private fun searchBookWithQuery(queryString: String) {
+        if(!suggestions.contains(queryString)){
+            suggestions.add(0, queryString)
+            suggestionsAdapter.notifyItemInserted(0)
+            searchSuggestionRecyclerView.scrollToPosition(0)
+        }
         viewModel.search(queryString)
+    }
+
+    private fun saveUpdatedSuggestionsSet() {
+        SharedPreferenceUtil
+            .putStringSet(SharedPreferenceUtil.KEY_SUGGESTIONS, suggestions.toMutableSet())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

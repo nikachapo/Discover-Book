@@ -64,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder()
                 .setAvailableProviders(providers)
-                .setIsSmartLockEnabled(false) //set true to save credentials
+                .setIsSmartLockEnabled(true) //set true to save credentials
                 .setTheme(R.style.AuthUiTheme)
                 .setLogo(R.mipmap.ic_launcher_round)
                 .build(),

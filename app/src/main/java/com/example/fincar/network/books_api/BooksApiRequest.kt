@@ -9,20 +9,23 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 object BooksApiRequest {
-    
+
     private const val BOOKS_API_BASE_URL = "https://www.googleapis.com/"
     private const val QUERY_PARAM = "q"
     private const val MAX_RESULTS = "maxResults"
     private const val PRINT_TYPE = "printType"
+    const val CATEGORY = "subject:"
 
-    private val retrofit = Retrofit.Builder()
-        .addConverterFactory(ScalarsConverterFactory.create())
-        .baseUrl(BOOKS_API_BASE_URL)
-        .build()
+    private val retrofit by lazy {
+        Retrofit.Builder()
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .baseUrl(BOOKS_API_BASE_URL)
+            .build()
+    }
 
-    private val service = retrofit.create(
-        BooksApiService::class.java)
-
+    private val service by lazy {
+        retrofit.create(BooksApiService::class.java)
+    }
 
     fun getBooksRequest(queryString: String, requestCallBacks: RequestCallBacks) {
         val call = service.getBooksRequestWithQuery(queryString)
@@ -48,7 +51,6 @@ object BooksApiRequest {
             @Query(MAX_RESULTS) maxResults: String = "10",
             @Query(PRINT_TYPE) printType: String = "books"
         ): Call<String>
-
 
     }
 }

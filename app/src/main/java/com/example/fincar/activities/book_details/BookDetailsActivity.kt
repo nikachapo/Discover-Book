@@ -23,7 +23,7 @@ class BookDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        googleBook = intent.getParcelableExtra(EXTRA_BOOK) as GoogleBook
+        googleBook = intent.getSerializableExtra(EXTRA_BOOK) as GoogleBook
 
         bookDetailsViewModel = ViewModelProvider(this).get(BookDetailsViewModel::class.java)
 

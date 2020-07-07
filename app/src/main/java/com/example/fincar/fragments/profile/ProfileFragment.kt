@@ -42,8 +42,8 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        loadingRootLayout = activity!!.findViewById(R.id.loadingRootLayout)
-        loadingAnimationView = activity!!.findViewById(R.id.loadingAnimationView)
+        loadingRootLayout = requireActivity().findViewById(R.id.loadingRootLayout)
+        loadingAnimationView = requireActivity().findViewById(R.id.loadingAnimationView)
         fetchUserData()
     }
 

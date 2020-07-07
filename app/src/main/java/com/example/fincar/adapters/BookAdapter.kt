@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fincar.activities.book_details.BookDetailsActivity
 import com.example.fincar.activities.book_details.EXTRA_BOOK
 import com.example.fincar.bean.book.GoogleBook
-import com.example.fincar.databinding.BookItemBinding
+import com.example.fincar.databinding.ItemGoogleBookBinding
 
 
 class BookAdapter(
@@ -23,7 +23,7 @@ class BookAdapter(
 
         val layoutInflater = LayoutInflater.from(parent.context)
 
-        val bookItemBinding = BookItemBinding
+        val bookItemBinding = ItemGoogleBookBinding
             .inflate(layoutInflater, parent, false)
 
         return BookViewHolder(bookItemBinding)
@@ -36,7 +36,7 @@ class BookAdapter(
     }
 
     inner class BookViewHolder(
-        private val bookItemBinding: BookItemBinding
+        private val bookItemBinding: ItemGoogleBookBinding
     ) : RecyclerView.ViewHolder(bookItemBinding.root) {
 
         fun onBind() {

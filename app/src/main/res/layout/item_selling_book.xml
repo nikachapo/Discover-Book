@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="sellingBookItem"
             type="com.example.fincar.bean.book.SellingBook" />
@@ -27,8 +28,11 @@
 
             <ImageView
                 android:id="@+id/sellingBookImageView"
+                imageFromUrl="@{sellingBookItem.photoUrl}"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
+                android:transitionName="imageTransition"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -38,33 +42,49 @@
                 android:id="@+id/sellingBookTitleTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{sellingBookItem.title}"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/sellingBookImageView"
                 app:layout_constraintTop_toTopOf="@+id/sellingBookImageView"
-                tools:text="@{sellingBookItem.title}" />
+                tools:text="Title" />
 
             <TextView
                 android:id="@+id/sellingBookAuthorsTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{sellingBookItem.authors}"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/sellingBookTitleTV"
                 app:layout_constraintStart_toStartOf="@+id/sellingBookTitleTV"
                 app:layout_constraintTop_toBottomOf="@+id/sellingBookTitleTV"
-                tools:text="@{sellingBookItem.authors}" />
+                tools:text="Authors here" />
 
-<!--            <RatingBar-->
-<!--                android:id="@+id/ratingBar"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="4dp"-->
-<!--                android:numStars="5"-->
-<!--                android:rating="@{Float.valueOf(sellingBookItem.rating)}"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/sellingBookAuthorsTV"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/sellingBookAuthorsTV"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/sellingBookAuthorsTV" />-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(sellingBookItem.price)}"
+                android:textColor="#FF6D00"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/sellingBookAuthorsTV"
+                app:layout_constraintTop_toBottomOf="@+id/sellingBookAuthorsTV"
+                tools:text="350$" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_star_active_24dp"
+                android:text="@{String.valueOf(sellingBookItem.rating)}"
+                android:textColor="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="3.5" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

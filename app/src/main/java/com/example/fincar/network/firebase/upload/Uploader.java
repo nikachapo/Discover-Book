@@ -36,6 +36,7 @@ public class Uploader extends FirebaseDbHelper {
 
         String bookId = sellingBooksReference.push().getKey();
         assert bookId != null;
+        sellingBook.setId(bookId);
         sellingBooksReference.child(bookId)
                 .setValue(sellingBook)
                 .addOnSuccessListener(v -> uploadDataCallbacks.onSuccess())

@@ -17,6 +17,7 @@ import com.example.fincar.network.firebase.upload.UploadDataCallbacks
 import com.example.fincar.network.firebase.upload.Uploader
 import com.example.fincar.network.firebase_storage.FirebaseStorageHelper
 import com.example.fincar.network.firebase_storage.UploadFileListener
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_registration.*
 import java.text.DateFormat
 import java.util.*
@@ -67,10 +68,18 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         binding.saveButton.setOnClickListener {
 
             if (isEveryFieldValid()) {
-                registerUser()
+                if(currentAccount == null){
+                    registerAccount()
+                }else{
+                    updateAccountData()
+                }
             }
 
         }
+    }
+
+    private fun updateAccountData() {
+        //TODO create update data function
     }
 
     private fun isEveryFieldValid(): Boolean {
@@ -99,10 +108,11 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         }
     }
 
-    private fun registerUser() {
+    private fun registerAccount() {
 
         if (imageUri != null) {
-            FirebaseStorageHelper.putFileToStorage(imageUri!!, object : UploadFileListener {
+            FirebaseStorageHelper.putFileToStorage(FirebaseStorageHelper.DIR_USER_PICTURES,imageUri!!,
+                object : UploadFileListener {
                 override fun onSuccess(url: String) {
                     imageUrl = url
                     writeDataToRD()
@@ -127,6 +137,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     private fun userModelWithCurrentData() = Account(
+        FirebaseAuth.getInstance().currentUser?.uid,
         binding.emailInputLayout.editText?.text.toString(),
         binding.phoneInputLayout.editText?.text.toString(),
         binding.firstNameInputLayout.editText?.text.toString(),
@@ -159,8 +170,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     companion object {
-        const val DEFAULT_IMAGE_URL =
+        private const val DEFAULT_IMAGE_URL =
             "https://www.pinclipart.com/picdir/big/164-1640714_user-symbol-interface-contact-phone-set-add-sign.png"
-
     }
 }

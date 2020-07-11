@@ -38,10 +38,7 @@ class MainActivity : AppCompatActivity() {
         initViews()
 
         startLoadingAnimation(loadingRootLayout, loadingAnimationView)
-        accountChecker =
-            AccountChecker(
-                checkUserCallback
-            )
+        accountChecker = AccountChecker(checkUserCallback)
 
         lifecycle.addObserver(accountChecker)
 

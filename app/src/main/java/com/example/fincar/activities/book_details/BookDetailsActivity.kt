@@ -33,7 +33,7 @@ class BookDetailsActivity : AppCompatActivity() {
 
         checkFavourite()
 
-        setListeners()
+        setClickListeners()
 
     }
 
@@ -48,7 +48,7 @@ class BookDetailsActivity : AppCompatActivity() {
         })
     }
 
-    private fun setListeners() {
+    private fun setClickListeners() {
         binding.starButton.setOnClickListener {
 
             if (binding.starButton.isChecked) {

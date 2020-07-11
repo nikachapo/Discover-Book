@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                 R.anim.slide_in_left
             )
 
-        handler.postDelayed(runnable, 2000)
+        handler.postDelayed(runnable, 1000)
     }
 
     override fun onStop() {

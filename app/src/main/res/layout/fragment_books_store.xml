@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@mipmap/store_bg"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/sellingBookContainer"
-    tools:context=".fragments.store.StoreFragment"
-    android:padding="8dp">
-
+    tools:context=".fragments.store.StoreFragment">
+    
+    <FrameLayout
+        android:id="@+id/sellingBookContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="8dp"/>
 </FrameLayout>

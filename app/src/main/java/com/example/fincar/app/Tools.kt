@@ -4,11 +4,13 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.R
 import com.example.fincar.fragments.DatePickerFragment
 import kotlinx.android.synthetic.main.dialog_layout.*
@@ -19,6 +21,22 @@ object Tools {
 
     fun showToast(context: Context, message: String){
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun startLoadingAnimation(loadingRootLayout: ViewGroup,
+                              loadingAnimationView: LottieAnimationView) {
+
+        loadingRootLayout.visibility = View.VISIBLE
+        loadingAnimationView.playAnimation()
+
+    }
+
+    fun cancelLoadingAnimation(loadingRootLayout: ViewGroup,
+                               loadingAnimationView: LottieAnimationView) {
+
+        loadingRootLayout.visibility = View.GONE
+        loadingAnimationView.cancelAnimation()
+
     }
 
     fun openImageChooser(activity: Activity) {

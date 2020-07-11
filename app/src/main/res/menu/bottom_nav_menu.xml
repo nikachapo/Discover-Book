@@ -7,9 +7,15 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_starred"
-        android:icon="@drawable/ic_stars_black_24dp"
-        android:title="@string/title_starred" />
+        android:id="@+id/navigation_store"
+        android:icon="@drawable/ic_store"
+        android:title="@string/store" />
+
+    <item
+        android:id="@+id/navigation_add_book"
+        android:icon="@drawable/ic_add_book"
+        android:title="@string/add_book" />
+
 
     <item
         android:id="@+id/navigation_search"

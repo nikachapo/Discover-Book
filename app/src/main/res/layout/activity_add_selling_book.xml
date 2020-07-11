@@ -1,9 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddSellingBookActivity">
+    tools:context=".activities.AddSellingBookActivity"
+    android:padding="8dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/sellingBookImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            tools:src="@mipmap/ic_launcher"/>
+
+        <EditText
+            android:id="@+id/sellingBookTitleEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/harry_potter"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/sellingBookDetailsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/history_of_hogwarts"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/sellingBookAuthorsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/j_k_rowling"
+            android:layout_marginTop="16dp"/>
+
+        <EditText
+            android:id="@+id/sellingBookPriceEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginTop="16dp"
+            android:hint="100$"/>
+
+        <EditText
+            android:id="@+id/sellingBookPagesEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginTop="16dp"
+            android:hint="@string/page_count"/>
+
+        <EditText
+            android:id="@+id/sellingBookAmountEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginTop="16dp"
+            android:hint="@string/Amount"/>
+
+        <Spinner
+            android:id="@+id/sellingBookCategorySpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:entries="@array/book_categories"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"/>
+
+        <Button
+            android:id="@+id/sellingBookUploadButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/upload"/>
+
+    </LinearLayout>
+</ScrollView>

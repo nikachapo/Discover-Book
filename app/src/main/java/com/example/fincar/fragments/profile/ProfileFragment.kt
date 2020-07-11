@@ -7,15 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.airbnb.lottie.LottieAnimationView
+import com.example.fincar.adapters.CenterZoomLayoutManager
 import com.example.fincar.R
-import com.example.fincar.app.Tools.showToast
 import com.example.fincar.activities.registration.EXTRA_USER
 import com.example.fincar.activities.registration.RegistrationActivity
-import com.example.fincar.bean.UserModel
+import com.example.fincar.app.Tools
+import com.example.fincar.app.Tools.showToast
+import com.example.fincar.bean.Account
+import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.databinding.FragmentProfileBinding
-import com.example.fincar.network.firebase.FetchUserDataCallbacks
-import com.example.fincar.network.firebase.FirebaseDbHelper
+import com.example.fincar.fragments.booksList.BooksListFragment
+import com.example.fincar.network.firebase.account.AccountDataObserver
+import com.example.fincar.network.firebase.account.FetchAccountDataCallbacks
 
 class ProfileFragment : Fragment() {
 
@@ -23,60 +30,71 @@ class ProfileFragment : Fragment() {
     private lateinit var loadingAnimationView: LottieAnimationView
 
     private lateinit var binding: FragmentProfileBinding
-    private val firebaseDbHelper = FirebaseDbHelper.getInstance()
+    private lateinit var accountDataObserver: AccountDataObserver
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private lateinit var profileFragmentViewModel: ProfileFragmentViewModel
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         val layoutInflater = LayoutInflater.from(container?.context)
-
-        lifecycle.addObserver(firebaseDbHelper)
-
         binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
-
         return binding.root
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         loadingRootLayout = requireActivity().findViewById(R.id.loadingRootLayout)
         loadingAnimationView = requireActivity().findViewById(R.id.loadingAnimationView)
-        fetchUserData()
+        Tools.startLoadingAnimation(loadingRootLayout, loadingAnimationView)
+        accountDataObserver =
+            AccountDataObserver(
+                fetchUserDataEventListener
+            )
+        lifecycle.addObserver(accountDataObserver)
+
+        initViewModel()
+
     }
 
-    private fun fetchUserData() {
-        loadingRootLayout.visibility = View.VISIBLE
-        loadingAnimationView.playAnimation()
+    private fun initViewModel() {
+        profileFragmentViewModel = ViewModelProvider(this).get(ProfileFragmentViewModel::class.java)
 
-        firebaseDbHelper.getCurrentUser(
-            object : FetchUserDataCallbacks {
-                override fun onReceive(userModel: UserModel?) {
-
-                    loadingRootLayout.visibility = View.GONE
-                    loadingAnimationView.cancelAnimation()
-
-                    binding.userModel = userModel
-
-                    binding.editButton.setOnClickListener {
-                        context?.startActivity(
-                            Intent(context, RegistrationActivity::class.java)
-                                .putExtra(EXTRA_USER, userModel)
+        profileFragmentViewModel.getStarredBooks()?.observe(viewLifecycleOwner, Observer {
+            childFragmentManager.beginTransaction()
+                .replace(
+                    R.id.starredBooksListContainer,
+                    BooksListFragment(
+                        googleBooksList = it as ArrayList<GoogleBook>,
+                        layoutManager = CenterZoomLayoutManager(
+                            context, LinearLayoutManager.HORIZONTAL,
+                            false
                         )
-                    }
+                    )
+                )
+                .commit()
+        })
+    }
 
-                }
+    private val fetchUserDataEventListener = object :
+        FetchAccountDataCallbacks {
+        override fun onReceive(account: Account?) {
+            Tools.cancelLoadingAnimation(loadingRootLayout, loadingAnimationView)
+            binding.userModel = account
+            binding.editButton.setOnClickListener {
+                context?.startActivity(
+                    Intent(context, RegistrationActivity::class.java)
+                        .putExtra(EXTRA_USER, account)
+                )
+            }
 
-                override fun onError(message: String) {
+        }
 
-                    loadingRootLayout.visibility = View.GONE
-                    loadingAnimationView.cancelAnimation()
-
-                    showToast(context!!, message)
-                }
-            })
+        override fun onError(message: String) {
+            Tools.cancelLoadingAnimation(loadingRootLayout, loadingAnimationView)
+            showToast(context!!, message)
+        }
     }
 
 }

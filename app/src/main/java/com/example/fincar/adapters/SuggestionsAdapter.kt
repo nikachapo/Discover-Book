@@ -18,6 +18,7 @@ class SuggestionsAdapter(private val suggestions: MutableList<String>,
 
     interface SuggestionClickListener{
         fun onSuggestionClicked(suggestion: String)
+        fun onSuggestionDeleted(position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuggestionsViewHolder {
@@ -39,19 +40,17 @@ class SuggestionsAdapter(private val suggestions: MutableList<String>,
         fun onBind() {
             val suggestion = suggestions[adapterPosition]
             itemView.suggestionTextView.text = suggestion
+            itemView.suggestionCard.setCardBackgroundColor(Color.GRAY)
             itemView.setOnClickListener {
+                itemView.suggestionCard.setCardBackgroundColor(Color.WHITE)
                 if(lastChosenPosition != adapterPosition){
-                    itemView.suggestionTextView.setTextColor(Color.WHITE)
                     notifyItemChanged(lastChosenPosition)
-                    lastChosenPosition = adapterPosition
-                    suggestionClickListener.onSuggestionClicked(suggestion)
                 }
+                lastChosenPosition = adapterPosition
+                suggestionClickListener.onSuggestionClicked(suggestion)
             }
             itemView.deleteSuggestionButton.setOnClickListener {
-                suggestions.removeAt(adapterPosition)
-                notifyItemRemoved(adapterPosition)
-                SharedPreferenceUtil.putStringSet(SharedPreferenceUtil.KEY_SUGGESTIONS,
-                    suggestions.toMutableSet())
+                suggestionClickListener.onSuggestionDeleted(adapterPosition)
             }
         }
     }

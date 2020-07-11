@@ -28,4 +28,13 @@
     <string name="edit">Edit</string>
     <string name="choose_image">Choose Image</string>
     <string name="search">Search</string>
+    <string name="harry_potter">Harry Potter</string>
+    <string name="history_of_hogwarts">History of Hogwarts</string>
+    <string name="j_k_rowling">J. K. Rowling</string>
+    <string name="page_count">Page count</string>
+    <string name="upload">Upload</string>
+    <string name="Amount">Amount</string>
+    <string name="favourites">Favourites</string>
+    <string name="store">Store</string>
+    <string name="add_book">Add Book</string>
 </resources>

@@ -12,7 +12,6 @@ import com.example.fincar.activities.book_details.EXTRA_BOOK
 import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.databinding.ItemGoogleBookBinding
 
-
 class BookAdapter(
     private val context: Context?,
     var googleBooks: ArrayList<GoogleBook>

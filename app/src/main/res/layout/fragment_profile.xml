@@ -7,82 +7,140 @@
 
         <variable
             name="userModel"
-            type="com.example.fincar.bean.UserModel" />
+            type="com.example.fincar.bean.Account" />
     </data>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="8dp"
-        tools:context=".fragments.profile.ProfileFragment">
+        android:background="@drawable/profile_bg">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp"
+            tools:context=".fragments.profile.ProfileFragment">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/first_name" />
+            <ImageView
+                android:id="@+id/imageView"
+                imageFromUrl="@{userModel.imageUrl}"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="36dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@{userModel.firstName}"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            tools:text="@string/first_name" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@{userModel.firstName +` `+ userModel.lastName}"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/imageView"
+                tools:text="@string/first_name" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/last_name" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{userModel.location}"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:drawableStart="@drawable/ic_location_on_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/location" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@{userModel.lastName}"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            tools:text="@string/last_name" />
+            <Button
+                android:id="@+id/editButton"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/button_selector"
+                android:text="@string/edit"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/birth_date" />
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="16dp"
+                android:background="#B7C8C7C7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="@{userModel.birthDate}"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            tools:text="@string/birth_date" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    tools:text="12 \n Purchases"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/black"
+                    android:gravity="center"
+                    android:text="@{String.valueOf(userModel.purchasedBooksCount) + `\n` + `Purchased`}" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/location" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    tools:text="4 \n Reviews"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:text="@{String.valueOf(userModel.reviewsCount) + `\n` + `Reviews`}" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{userModel.location}"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            tools:text="@string/location" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    tools:text="23 \n Sold"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:text="@{String.valueOf(userModel.soldBooksCount) + `\n` + `Sold`}" />
 
-        <Button
-            android:layout_marginTop="16dp"
-            android:id="@+id/editButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/edit"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:background="@drawable/button_selector"/>
-    </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/favouritesLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_star_active_24dp"
+                android:text="@string/favourites"
+                android:textColor="@android:color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="24dp"
+                app:layout_constraintBottom_toTopOf="@+id/starredBooksListContainer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+            <FrameLayout
+                android:id="@+id/starredBooksListContainer"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/favouritesLabel" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
 </layout>

@@ -14,13 +14,11 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.R
 import com.example.fincar.adapters.SuggestionsAdapter
 import com.example.fincar.app.SharedPreferenceUtil
-import com.example.fincar.bean.book.Book
 import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.fragments.BaseFragment
 import com.example.fincar.fragments.booksList.BookViewModel
 import com.example.fincar.fragments.booksList.BookViewModelFactory
 import com.example.fincar.fragments.booksList.BooksListFragment
-import kotlinx.android.synthetic.main.fragment_search_books.view.*
 import kotlinx.android.synthetic.main.search_toolbar_layout.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -71,7 +69,8 @@ class SearchBooksFragment : BaseFragment() {
                     .replace(
                         R.id.booksListContainer,
                         BooksListFragment(
-                            books as ArrayList<GoogleBook>
+                            googleBooksList = books as ArrayList<GoogleBook>,
+                            layoutManager = LinearLayoutManager(context)
                         )
                     )
                     .commit()
@@ -91,9 +90,13 @@ class SearchBooksFragment : BaseFragment() {
         suggestionsAdapter = SuggestionsAdapter(suggestions,
             object : SuggestionsAdapter.SuggestionClickListener {
                 override fun onSuggestionClicked(suggestion: String) {
-
                     searchEditText.setText(suggestion)
                     searchBookWithQuery(suggestion)
+                }
+
+                override fun onSuggestionDeleted(position: Int) {
+                    suggestions.removeAt(position)
+                    suggestionsAdapter.notifyItemRemoved(position)
                 }
 
             })
@@ -125,7 +128,7 @@ class SearchBooksFragment : BaseFragment() {
     }
 
     private fun searchBookWithQuery(queryString: String) {
-        if(!suggestions.contains(queryString)){
+        if (!suggestions.contains(queryString)) {
             suggestions.add(0, queryString)
             suggestionsAdapter.notifyItemInserted(0)
             searchSuggestionRecyclerView.scrollToPosition(0)

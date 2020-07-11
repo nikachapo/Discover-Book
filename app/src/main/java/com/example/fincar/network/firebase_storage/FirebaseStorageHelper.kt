@@ -15,9 +15,9 @@ object FirebaseStorageHelper {
         pictureReference.putFile(uri)
             .continueWithTask {
                 if (!it.isSuccessful && it.exception !=null) {
-                    throw it.exception!!;
+                    throw it.exception!!
                 }
-                pictureReference.downloadUrl;
+                pictureReference.downloadUrl
             }.addOnSuccessListener {
                 onUploadFileListener.onSuccess(it.toString())
             }

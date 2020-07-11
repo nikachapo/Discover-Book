@@ -11,7 +11,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/itemRootLayout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -49,13 +49,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="@{bookItem.authors}"
                 android:textColor="@android:color/black"
                 tools:text="Authors"
                 android:maxLines="2"
                 android:ellipsize="end"/>
-
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

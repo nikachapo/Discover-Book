@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="sellingBookItem"
+            type="com.example.fincar.bean.book.SellingBook" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/sellingBookImageView"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/sellingBookTitleTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/sellingBookImageView"
+                app:layout_constraintTop_toTopOf="@+id/sellingBookImageView"
+                tools:text="@{sellingBookItem.title}" />
+
+            <TextView
+                android:id="@+id/sellingBookAuthorsTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/sellingBookTitleTV"
+                app:layout_constraintStart_toStartOf="@+id/sellingBookTitleTV"
+                app:layout_constraintTop_toBottomOf="@+id/sellingBookTitleTV"
+                tools:text="@{sellingBookItem.authors}" />
+
+<!--            <RatingBar-->
+<!--                android:id="@+id/ratingBar"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:numStars="5"-->
+<!--                android:rating="@{Float.valueOf(sellingBookItem.rating)}"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/sellingBookAuthorsTV"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/sellingBookAuthorsTV"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/sellingBookAuthorsTV" />-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

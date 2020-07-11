@@ -38,11 +38,7 @@ class BookDetailsActivity : AppCompatActivity() {
     }
 
     private fun setUpBinding() {
-        binding =
-            DataBindingUtil.setContentView(
-                this,
-                R.layout.activity_book_details
-            )
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_book_details)
         binding.book = googleBook
     }
 

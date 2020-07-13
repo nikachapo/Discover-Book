@@ -4,14 +4,12 @@ import android.app.Application
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.fincar.app.Tools.showToast
 import com.example.fincar.app.App
+import com.example.fincar.app.Tools.showToast
 import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.network.books_api.BooksApiRequest
 import com.example.fincar.network.books_api.RequestCallBacks
-import org.json.JSONException
 import org.json.JSONObject
-
 
 class BookRepository(application: Application?) {
     private var bookDao: BookDao? = null

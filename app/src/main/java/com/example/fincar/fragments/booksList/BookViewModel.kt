@@ -1,6 +1,7 @@
 package com.example.fincar.fragments.booksList
 
 
+import android.util.Log.d
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -26,5 +27,9 @@ class BookViewModel(q: String?) : ViewModel() {
         if (q != null) searchStringLive.value = q
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        d("Cleeeeeeeeeared","yeaaa sorry (((aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    }
 
 }

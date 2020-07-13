@@ -1,15 +1,13 @@
 package com.example.fincar.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.fincar.R
 import com.example.fincar.adapters.EXTRA_SELLING_BOOK
 import com.example.fincar.bean.book.SellingBook
 import com.example.fincar.databinding.ActivitySellingBookDetailsBinding
-import com.example.fincar.network.firebase.FirebaseDbHelper
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_selling_book_details.*
 import java.text.DecimalFormat
 
 class SellingBookDetailsActivity : AppCompatActivity() {
@@ -28,9 +26,9 @@ class SellingBookDetailsActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        val rating = DecimalFormat("#0.0").format(
+        val rating =
         ((sellingBook.rating * sellingBook.ratedCount) +
-                binding.ratingBar.rating) / (sellingBook.ratedCount + 1))
+                binding.ratingBar.rating) / (sellingBook.ratedCount + 1)
 
         val bookRef = FirebaseDatabase.getInstance().reference
             .child("selling_books")

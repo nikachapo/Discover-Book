@@ -2,88 +2,89 @@ package com.example.fincar.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.R
 import com.example.fincar.activities.registration.RegistrationActivity
-import com.example.fincar.adapters.ViewPagerAdapter
 import com.example.fincar.app.Tools.cancelLoadingAnimation
 import com.example.fincar.app.Tools.showToast
 import com.example.fincar.app.Tools.startLoadingAnimation
-import com.example.fincar.fragments.home.HomeFragment
-import com.example.fincar.fragments.profile.ProfileFragment
-import com.example.fincar.fragments.search_books.SearchBooksFragment
-import com.example.fincar.fragments.store.StoreFragment
 import com.example.fincar.network.firebase.account.AccountChecker
 import com.example.fincar.network.firebase.account.CheckAccountCallbacks
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.search_toolbar_layout.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewPager: ViewPager
     private lateinit var navView: BottomNavigationView
 
     private lateinit var loadingRootLayout: FrameLayout
     private lateinit var loadingAnimationView: LottieAnimationView
-
+    private lateinit var searchEditText: EditText
+    private lateinit var searchButton: Button
     private lateinit var accountChecker: AccountChecker
+    private lateinit var navController:NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(searchToolbar)
+
         initViews()
 
         startLoadingAnimation(loadingRootLayout, loadingAnimationView)
-        accountChecker = AccountChecker(checkUserCallback)
 
+        accountChecker = AccountChecker(checkUserCallback)
         lifecycle.addObserver(accountChecker)
 
-        val fragments = arrayListOf(
-            HomeFragment(), StoreFragment(),
-            SearchBooksFragment(), ProfileFragment()
+        setUpNavigation()
+    }
+
+    private fun setUpNavigation() {
+        navController = findNavController(R.id.nav_host_fragment)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.navigation_home, R.id.navigation_store, R.id.navigation_profile)
         )
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.navigation_search){
+                searchEditText.visibility = View.VISIBLE
+                searchButton.setOnClickListener(null)
+            }else{
+                searchEditText.visibility = View.GONE
+                searchButton.setOnClickListener(searchClickListener)
+            }
 
-        setUpViewPager(fragments)
+        }
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
+    }
 
-        setUpNavView()
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
 
+    private val searchClickListener = View.OnClickListener {
+        navController.navigate(R.id.navigation_search)
     }
 
     private fun initViews() {
-        viewPager = findViewById(R.id.viewPager)
         navView = findViewById(R.id.nav_view)
         loadingRootLayout = findViewById(R.id.loadingRootLayout)
         loadingAnimationView = findViewById(R.id.loadingAnimationView)
-    }
-
-    private fun setUpViewPager(fragments: ArrayList<Fragment>) {
-        viewPager.adapter = ViewPagerAdapter(supportFragmentManager, fragments)
-        viewPager.addOnPageChangeListener(viewPagerPageChangeListener)
-    }
-
-    private fun setUpNavView() {
-        navView.setOnNavigationItemSelectedListener {
-            var currentItem = 0
-            when (it.itemId) {
-                R.id.navigation_home -> currentItem = 0
-                R.id.navigation_store -> currentItem = 1
-                R.id.navigation_search -> currentItem = 2
-                R.id.navigation_profile -> currentItem = 3
-                R.id.navigation_add_book -> {
-                    openAddBookActivity()
-                }
-            }
-            viewPager.currentItem = currentItem
-            true
-        }
-    }
-
-    private fun openAddBookActivity() {
-        startActivity(Intent(this, AddSellingBookActivity::class.java))
+        searchEditText = findViewById(R.id.searchEditText)
+        searchButton = findViewById(R.id.searchButton)
     }
 
     private val checkUserCallback = object :
@@ -100,23 +101,6 @@ class MainActivity : AppCompatActivity() {
         override fun onNotFound() {
             cancelLoadingAnimation(loadingRootLayout, loadingAnimationView)
             startActivity(Intent(this@MainActivity, RegistrationActivity::class.java))
-        }
-    }
-
-    private val viewPagerPageChangeListener = object : ViewPager.OnPageChangeListener {
-        override fun onPageScrollStateChanged(state: Int) {
-
-        }
-
-        override fun onPageScrolled(
-            position: Int,
-            positionOffset: Float,
-            positionOffsetPixels: Int
-        ) {
-        }
-
-        override fun onPageSelected(position: Int) {
-            navView.menu.getItem(position).isChecked = true
         }
     }
 }

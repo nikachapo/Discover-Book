@@ -76,44 +76,51 @@ class BookRepository(application: Application?) {
 
             for (i in 0 until itemsArray.length()) {
                 val googleBook = GoogleBook()
-                try {
-                    val bookJson = itemsArray.getJSONObject(i)
-                    googleBook.id = bookJson.getString("id")
-                    val volumeInfo = bookJson.getJSONObject("volumeInfo")
-                    googleBook.previewUrl = volumeInfo.getString("previewLink")
-                    googleBook.title = volumeInfo.getString("title")
-                    if (volumeInfo.has("publisher"))
-                        googleBook.publisher = volumeInfo.getString("publisher")
 
+                val bookJson = itemsArray.getJSONObject(i)
+                googleBook.id = bookJson.getString("id")
+                val volumeInfo = bookJson.getJSONObject("volumeInfo")
+                googleBook.previewUrl = volumeInfo.getString("previewLink")
+                googleBook.title = volumeInfo.getString("title")
+                if (volumeInfo.has("publisher"))
+                    googleBook.publisher = volumeInfo.getString("publisher")
+
+                if(volumeInfo.has("publishedDate")) {
                     googleBook.publishDate = volumeInfo.getString("publishedDate")
-                    if (volumeInfo.has("description"))
-                        googleBook.description = volumeInfo.getString("description")
-
-                    val imageLinksJsonObject = volumeInfo.getJSONObject("imageLinks")
-                    googleBook.photoUrl = imageLinksJsonObject.getString("smallThumbnail")
-
-                    if (volumeInfo.has("authors")) {
-                        val authorsJsonArray = volumeInfo.getJSONArray("authors")
-                        googleBook.authors = authorsJsonArray.join(", ")
-                    }
-
-                    if (volumeInfo.has("categories")) {
-                        val authorsJsonArray = volumeInfo.getJSONArray("categories")
-                        googleBook.categories = authorsJsonArray.join(", ")
-                    }
-
-                    googleBook.pageCount = volumeInfo.getInt("pageCount")
-                    googleBook.language = volumeInfo.getString("language")
-                    val accessInfoJSONObject = bookJson.getJSONObject("accessInfo")
-                    val pdfJSONObject = accessInfoJSONObject.getJSONObject("pdf")
-                    googleBook.isPdfAvailable = pdfJSONObject.getBoolean("isAvailable")
-                    if (googleBook.isPdfAvailable) googleBook.pdfLink = pdfJSONObject.getString("downloadLink")
-                    booksList.add(googleBook)
-
-                } catch (jsonException: JSONException) {
-                    //error
-                    continue
                 }
+
+                if (volumeInfo.has("description")) {
+                    googleBook.description = volumeInfo.getString("description")
+                }
+
+                val imageLinksJsonObject = volumeInfo.getJSONObject("imageLinks")
+                googleBook.photoUrl = imageLinksJsonObject.getString("smallThumbnail")
+
+                if (volumeInfo.has("authors")) {
+                    val authorsJsonArray = volumeInfo.getJSONArray("authors")
+                    googleBook.authors = authorsJsonArray.join(", ")
+                }
+
+                if (volumeInfo.has("categories")) {
+                    val authorsJsonArray = volumeInfo.getJSONArray("categories")
+                    googleBook.categories = authorsJsonArray.join(", ")
+                }
+
+                if(volumeInfo.has("pageCount")) googleBook.pageCount = volumeInfo.getInt("pageCount")
+                googleBook.language = volumeInfo.getString("language")
+                val accessInfoJSONObject = bookJson.getJSONObject("accessInfo")
+                val pdfJSONObject = accessInfoJSONObject.getJSONObject("pdf")
+                googleBook.isPdfAvailable = pdfJSONObject.getBoolean("isAvailable")
+
+                if (googleBook.isPdfAvailable) {
+                    if(pdfJSONObject.has("downloadLink")) {
+                        googleBook.pdfLink = pdfJSONObject.getString("downloadLink")
+                    }else if(pdfJSONObject.has("acsTokenLink")){
+                            googleBook.pdfLink = pdfJSONObject.getString("acsTokenLink")
+                    }
+                }
+                booksList.add(googleBook)
+
                 books.value = booksList
 
             }

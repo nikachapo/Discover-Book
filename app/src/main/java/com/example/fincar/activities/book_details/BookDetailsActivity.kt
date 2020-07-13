@@ -9,6 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fincar.R
+import com.example.fincar.activities.EXTRA_PDF_URL
+import com.example.fincar.activities.PdfViewActivity
+import com.example.fincar.app.Tools
 import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.databinding.ActivityBookDetailsBinding
 
@@ -67,6 +70,17 @@ class BookDetailsActivity : AppCompatActivity() {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(googleBook.previewUrl))
             startActivity(browserIntent)
         }
+
+        binding.pdfButton.setOnClickListener {
+            if(googleBook.isPdfAvailable){
+                startActivity(Intent(this, PdfViewActivity::class.java)
+                    .putExtra(EXTRA_PDF_URL, googleBook.pdfLink))
+            }else{
+                Tools.showToast(this, "Pdf is not available")
+            }
+        }
+
+
     }
 
     private fun setUpActionBar() {

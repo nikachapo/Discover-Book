@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
+import com.example.fincar.layout_manager.LayoutManagerFactory
 import com.example.fincar.R
 import com.example.fincar.adapters.SuggestionsAdapter
 import com.example.fincar.app.SharedPreferenceUtil
@@ -19,7 +20,8 @@ import com.example.fincar.fragments.BaseFragment
 import com.example.fincar.fragments.booksList.BookViewModel
 import com.example.fincar.fragments.booksList.BookViewModelFactory
 import com.example.fincar.fragments.booksList.BooksListFragment
-import kotlinx.android.synthetic.main.search_toolbar_layout.view.*
+import com.example.fincar.layout_manager.ILayoutManagerFactory
+import kotlinx.android.synthetic.main.fragment_search_books.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,7 +29,6 @@ import kotlinx.coroutines.launch
 class SearchBooksFragment : BaseFragment() {
 
     private lateinit var viewModel: BookViewModel
-
     private lateinit var searchEditText: EditText
     private lateinit var searchButton: Button
     private lateinit var loadingRootLayout: FrameLayout
@@ -48,21 +49,14 @@ class SearchBooksFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if (savedInstanceState != null)
-            lastSearchedQuery = savedInstanceState.getString(EXTRA_TITLE, "")
-
         initViewModel()
-
         loadingRootLayout = requireActivity().findViewById(R.id.loadingRootLayout)
         loadingAnimationView = requireActivity().findViewById(R.id.loadingAnimationView)
-
-
     }
 
     private fun initViewModel() {
         val factory = BookViewModelFactory(lastSearchedQuery)
         viewModel = ViewModelProvider(this, factory).get(BookViewModel::class.java)
-
         viewModel.allBooksLiveData.observe(viewLifecycleOwner,
             Observer { books ->
                 childFragmentManager.beginTransaction()
@@ -70,7 +64,12 @@ class SearchBooksFragment : BaseFragment() {
                         R.id.booksListContainer,
                         BooksListFragment(
                             googleBooksList = books as ArrayList<GoogleBook>,
-                            layoutManager = LinearLayoutManager(context)
+                            layoutManagerFactory = object : ILayoutManagerFactory {
+                                override fun create(): RecyclerView.LayoutManager {
+                                    return LayoutManagerFactory.create(context, false)
+                                }
+
+                            }
                         )
                     )
                     .commit()
@@ -81,8 +80,8 @@ class SearchBooksFragment : BaseFragment() {
     }
 
     private fun initViews(view: View) {
-        searchEditText = view.searchEditText
-        searchButton = view.searchButton
+        searchEditText = requireActivity().findViewById(R.id.searchEditText)
+        searchButton = requireActivity().findViewById(R.id.searchButton)
         searchSuggestionRecyclerView = view.searchSuggestionRecyclerView
         searchSuggestionRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

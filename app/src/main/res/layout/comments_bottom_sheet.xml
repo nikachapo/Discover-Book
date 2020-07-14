@@ -1,65 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:id="@+id/bottomSheerRootView"
-    android:layout_height="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/bottom_sheet_behavior"
-    app:behavior_peekHeight="?attr/actionBarSize"
-    android:padding="8dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
-        android:id="@+id/commentsBottomSheetHeader"
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomSheerRootView"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:background="@drawable/comments_bs_bg"
+        android:padding="8dp"
+        app:behavior_peekHeight="?attr/actionBarSize"
+        app:layout_behavior="@string/bottom_sheet_behavior">
 
-        <ToggleButton
-            android:id="@+id/arrowToggle"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/arrow_selector"
-            android:text=""
-            android:textOff=""
-            android:textOn="" />
+        <FrameLayout
+            android:id="@+id/commentsBottomSheetHeader"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/bs_header_bg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <ToggleButton
+                android:id="@+id/arrowToggle"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/arrow_selector"
+                android:text=""
+                android:textOff=""
+                android:textOn="" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/comments"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/commentsRecyclerView"
+            android:layout_width="match_parent"
+            android:nestedScrollingEnabled="true"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/commentBottomSheetEditText"
+            app:layout_constraintTop_toBottomOf="@id/commentsBottomSheetHeader"
+            tools:layout_editor_absoluteX="8dp"
+            tools:listitem="@layout/item_comment_layout" />
+
+        <EditText
+            android:id="@+id/commentBottomSheetEditText"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/comments"
-            android:textColor="@android:color/white"
-            android:textSize="24sp" />
-    </FrameLayout>
+            android:hint="@string/comment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/commentAddButton"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/commentsRecyclerView"
-        android:layout_width="match_parent"
-        tools:listitem="@layout/item_comment_layout"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/commentBottomSheetEditText"
-        app:layout_constraintTop_toBottomOf="@id/commentsBottomSheetHeader"
-        tools:layout_editor_absoluteX="8dp" />
-
-    <EditText
-        android:id="@+id/commentBottomSheetEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/commentAddButton"
-        app:layout_constraintStart_toStartOf="parent"
-        android:hint="Comment"/>
-
-    <Button
-        android:id="@+id/commentAddButton"
-        android:layout_width="70dp"
-        android:layout_height="50dp"
-        android:text="send"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/commentAddButton"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:background="@drawable/send_button_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

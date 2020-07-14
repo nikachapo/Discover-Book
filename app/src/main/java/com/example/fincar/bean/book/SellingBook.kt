@@ -1,5 +1,7 @@
 package com.example.fincar.bean.book
 
+import com.example.fincar.bean.comment.Comment
+import com.example.fincar.network.firebase.FirebaseDbHelper
 import com.google.firebase.database.FirebaseDatabase
 
 class SellingBook(var ownerId: String): Book() {
@@ -29,5 +31,27 @@ class SellingBook(var ownerId: String): Book() {
             .setValue(ratedCount + 1)
         bookRef.child("rating")
             .setValue(rating)
+    }
+
+    private fun getCommentsRef() = FirebaseDatabase.getInstance()
+        .getReference(FirebaseDbHelper.SELLING_BOOKS_KEY)
+        .child(id)
+        .child("comments")
+
+    fun increaseSeenCount(){
+        FirebaseDatabase.getInstance()
+            .getReference(FirebaseDbHelper.SELLING_BOOKS_KEY)
+            .child(id)
+            .child("seenCount")
+            .setValue(seenCount++)
+    }
+
+    fun addComment(comment: Comment){
+        val bookCommentsRef = getCommentsRef()
+
+        comment.id = bookCommentsRef.push().key!!
+
+        bookCommentsRef.child(comment.id!!)
+            .setValue(comment)
     }
 }

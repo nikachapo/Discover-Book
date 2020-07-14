@@ -12,7 +12,8 @@ data class Account(
     var imageUrl: String? = null,
     var purchasedBooksCount: Int? = 0,
     var reviewsCount: Int? = 0,
-    var soldBooksCount: Int? = 0
+    var soldBooksCount: Int? = 0,
+    var balance: Double? = 1000.0
 ) : Parcelable{
     constructor():this("","","","","","","")
 }

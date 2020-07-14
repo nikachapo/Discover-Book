@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fincar.activities.SellingBookDetailsActivity
+import com.example.fincar.activities.registration.EXTRA_ACCOUNT
+import com.example.fincar.activities.selling_book_details.SellingBookDetailsActivity
+import com.example.fincar.bean.Account
 import com.example.fincar.bean.book.SellingBook
 import com.example.fincar.databinding.ItemSellingBookBinding
 
@@ -15,7 +17,8 @@ const val EXTRA_SELLING_BOOK = "extra_selling_book"
 
 class SellingBookAdapter(
     private val context: Context?,
-    var sellingBooks: ArrayList<SellingBook>
+    var sellingBooks: ArrayList<SellingBook>,
+    private val account: Account?
 ) : RecyclerView.Adapter<SellingBookAdapter.SellingBookViewHolder>() {
 
 
@@ -47,7 +50,7 @@ class SellingBookAdapter(
 
                 val intent = Intent(context, SellingBookDetailsActivity::class.java)
                 intent.putExtra(EXTRA_SELLING_BOOK, book)
-
+                intent.putExtra(EXTRA_ACCOUNT, account)
                 val options =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(
                         context as Activity,

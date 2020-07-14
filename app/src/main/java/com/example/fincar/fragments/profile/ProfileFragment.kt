@@ -14,17 +14,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.layout_manager.LayoutManagerFactory
 import com.example.fincar.R
-import com.example.fincar.activities.registration.EXTRA_USER
+import com.example.fincar.activities.main.MainViewModel
+import com.example.fincar.activities.registration.EXTRA_ACCOUNT
 import com.example.fincar.activities.registration.RegistrationActivity
 import com.example.fincar.app.Tools
-import com.example.fincar.app.Tools.showToast
-import com.example.fincar.bean.Account
 import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.databinding.FragmentProfileBinding
 import com.example.fincar.fragments.booksList.BooksListFragment
 import com.example.fincar.layout_manager.ILayoutManagerFactory
-import com.example.fincar.network.firebase.account.AccountDataObserver
-import com.example.fincar.network.firebase.account.FetchAccountDataCallbacks
 
 class ProfileFragment : Fragment() {
 
@@ -32,33 +29,38 @@ class ProfileFragment : Fragment() {
     private lateinit var loadingAnimationView: LottieAnimationView
 
     private lateinit var binding: FragmentProfileBinding
-    private lateinit var accountDataObserver: AccountDataObserver
 
     private lateinit var profileFragmentViewModel: ProfileFragmentViewModel
+    private lateinit var mainViewModel: MainViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val layoutInflater = LayoutInflater.from(container?.context)
         binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         loadingRootLayout = requireActivity().findViewById(R.id.loadingRootLayout)
         loadingAnimationView = requireActivity().findViewById(R.id.loadingAnimationView)
         Tools.startLoadingAnimation(loadingRootLayout, loadingAnimationView)
-        accountDataObserver = AccountDataObserver(fetchUserDataEventListener)
-        lifecycle.addObserver(accountDataObserver)
-
-        initViewModel()
-
+        initViewModels()
+        lifecycle.addObserver(mainViewModel.accountDataObserver)
     }
 
-    private fun initViewModel() {
+    private fun initViewModels() {
         profileFragmentViewModel = ViewModelProvider(this).get(ProfileFragmentViewModel::class.java)
+        mainViewModel = activity?.run {
+            ViewModelProvider(this)[MainViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+
+        addObservers()
+    }
+
+    private fun addObservers() {
         profileFragmentViewModel.getStarredBooks()?.observe(viewLifecycleOwner, Observer {
             childFragmentManager.beginTransaction()
                 .replace(
@@ -68,33 +70,31 @@ class ProfileFragment : Fragment() {
                         layoutManagerFactory = object : ILayoutManagerFactory {
                             override fun create(): RecyclerView.LayoutManager {
                                 return LayoutManagerFactory
-                                    .create(context, LinearLayoutManager.HORIZONTAL,false)
+                                    .create(context, LinearLayoutManager.HORIZONTAL, true)
                             }
                         }
-                        )
                     )
+                )
                 .commit()
         })
-    }
+        mainViewModel.getAccountLiveData().observe(viewLifecycleOwner, Observer { account ->
 
-    private val fetchUserDataEventListener = object :
-        FetchAccountDataCallbacks {
-        override fun onReceive(account: Account?) {
             Tools.cancelLoadingAnimation(loadingRootLayout, loadingAnimationView)
             binding.userModel = account
             binding.editButton.setOnClickListener {
                 context?.startActivity(
                     Intent(context, RegistrationActivity::class.java)
-                        .putExtra(EXTRA_USER, account)
+                        .putExtra(EXTRA_ACCOUNT, account)
                 )
+
             }
+        })
 
-        }
-
-        override fun onError(message: String) {
+        mainViewModel.getAccountFetchErrorMessage().observe(viewLifecycleOwner, Observer {
+            message ->
             Tools.cancelLoadingAnimation(loadingRootLayout, loadingAnimationView)
-            showToast(context!!, message)
-        }
+            Tools.showToast(requireContext(), message)
+        })
     }
 
 }

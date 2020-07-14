@@ -82,7 +82,7 @@ class SearchBooksFragment : BaseFragment() {
         val activity = requireActivity()
         searchEditText = activity.findViewById(R.id.searchEditText)
         searchButton = activity.findViewById(R.id.searchButton)
-        searchSuggestionRecyclerView = activity.findViewById(R.id.searchSuggestionRecyclerView)
+        searchSuggestionRecyclerView = requireView().findViewById(R.id.searchSuggestionRecyclerView)
         searchSuggestionRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 

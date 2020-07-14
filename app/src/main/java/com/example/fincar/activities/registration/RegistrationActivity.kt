@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_registration.*
 import java.text.DateFormat
 import java.util.*
 
-const val EXTRA_USER = "extra-user"
+const val EXTRA_ACCOUNT = "extra-account"
 
 class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
@@ -100,8 +100,8 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     private fun getUserFromIntent(intent: Intent) {
-        if (intent.hasExtra(EXTRA_USER)) {
-            currentAccount = intent.getParcelableExtra(EXTRA_USER) as Account
+        if (intent.hasExtra(EXTRA_ACCOUNT)) {
+            currentAccount = intent.getParcelableExtra(EXTRA_ACCOUNT) as Account
             binding.user = currentAccount
             profileImageView.loadImage(Uri.parse(currentAccount!!.imageUrl))
             binding.chooseImageLayout.isClickable = false

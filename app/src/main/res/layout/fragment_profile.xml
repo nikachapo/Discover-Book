@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="userModel"
             type="com.example.fincar.bean.Account" />
@@ -13,14 +12,13 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/profile_bg">
+        android:background="@mipmap/bg_triangles">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="16dp"
             tools:context=".fragments.profile.ProfileFragment">
 
             <ImageView
@@ -54,6 +52,8 @@
                 android:text="@{userModel.location}"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:drawableStart="@drawable/ic_location_on_24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -80,6 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:background="#B7C8C7C7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -121,12 +123,13 @@
                 android:id="@+id/favouritesLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
                 android:drawableEnd="@drawable/ic_star_active_24dp"
                 android:text="@string/favourites"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:layout_marginTop="24dp"
                 app:layout_constraintBottom_toTopOf="@+id/starredBooksListContainer"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

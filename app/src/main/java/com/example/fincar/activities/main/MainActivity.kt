@@ -1,4 +1,4 @@
-package com.example.fincar.activities
+package com.example.fincar.activities.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,13 +7,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.R
+import com.example.fincar.activities.AddSellingBookActivity
+import com.example.fincar.activities.registration.EXTRA_ACCOUNT
 import com.example.fincar.activities.registration.RegistrationActivity
 import com.example.fincar.app.Tools.cancelLoadingAnimation
 import com.example.fincar.app.Tools.showToast
@@ -22,6 +27,7 @@ import com.example.fincar.extensions.setVisibilityWithAnim
 import com.example.fincar.network.firebase.account.AccountChecker
 import com.example.fincar.network.firebase.account.CheckAccountCallbacks
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.search_toolbar_layout.*
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +39,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var searchEditText: EditText
     private lateinit var searchButton: Button
     private lateinit var accountChecker: AccountChecker
-    private lateinit var navController:NavController
+    private lateinit var navController: NavController
+    private lateinit var addBookButton: FloatingActionButton
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,29 +51,47 @@ class MainActivity : AppCompatActivity() {
 
         initViews()
 
+        initViewModel()
+
         startLoadingAnimation(loadingRootLayout, loadingAnimationView)
 
-        accountChecker = AccountChecker(checkUserCallback)
-        lifecycle.addObserver(accountChecker)
+        addLifecycleObservers()
 
         setUpNavigation()
     }
 
+    private fun addLifecycleObservers() {
+        accountChecker = AccountChecker(checkUserCallback)
+        lifecycle.addObserver(accountChecker)
+        lifecycle.addObserver(mainViewModel.accountDataObserver)
+    }
+
+    private fun initViewModel() {
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mainViewModel.getAccountLiveData().observe(this, Observer { account ->
+            addBookButton.setOnClickListener {
+                startActivity(
+                    Intent(this, AddSellingBookActivity::class.java)
+                        .putExtra(EXTRA_ACCOUNT, account)
+                )
+            }
+        })
+    }
+
     private fun setUpNavigation() {
-        navController = findNavController(R.id.nav_host_fragment)
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.navigation_home, R.id.navigation_store, R.id.navigation_profile)
         )
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if(destination.id == R.id.navigation_search){
+            if (destination.id == R.id.navigation_search) {
                 searchEditText.setVisibilityWithAnim(View.VISIBLE)
-                searchSuggestionRecyclerView.setVisibilityWithAnim(View.VISIBLE)
                 searchButton.setOnClickListener(null)
-            }else{
+            } else {
                 searchEditText.setVisibilityWithAnim(View.GONE)
-                searchSuggestionRecyclerView.setVisibilityWithAnim(View.GONE)
                 searchButton.setOnClickListener(searchClickListener)
             }
 
@@ -88,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         loadingAnimationView = findViewById(R.id.loadingAnimationView)
         searchEditText = findViewById(R.id.searchEditText)
         searchButton = findViewById(R.id.searchButton)
+        addBookButton = findViewById(R.id.addBookButton)
     }
 
     private val checkUserCallback = object :

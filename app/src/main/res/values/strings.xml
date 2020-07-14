@@ -41,4 +41,6 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="comments">Comments</string>
+    <string name="comment">Comment</string>
+    <string name="buy">Buy</string>
 </resources>

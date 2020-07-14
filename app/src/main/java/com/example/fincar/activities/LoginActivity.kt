@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fincar.R
+import com.example.fincar.activities.main.MainActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*

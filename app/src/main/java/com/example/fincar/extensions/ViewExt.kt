@@ -1,31 +1,15 @@
 package com.example.fincar.extensions
 
+import android.transition.Fade
+import android.transition.Transition
+import android.transition.TransitionManager
 import android.view.View
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
+import android.view.ViewGroup
 
 fun View.setVisibilityWithAnim(visibility: Int) {
-    val alphaAnimation = if (visibility == View.VISIBLE) {
-        AlphaAnimation(0F, 1F)
-    } else {
-        AlphaAnimation(1F, 0F)
-    }
-    alphaAnimation.duration = 200
-    alphaAnimation.setAnimationListener(object : Animation.AnimationListener {
-        override fun onAnimationRepeat(animation: Animation?) {
-            if (visibility == View.VISIBLE) {
-                this@setVisibilityWithAnim.visibility = View.VISIBLE
-            }
-        }
-
-        override fun onAnimationEnd(animation: Animation?) {
-            this@setVisibilityWithAnim.visibility = visibility
-        }
-
-        override fun onAnimationStart(animation: Animation?) {
-
-        }
-
-    })
-    startAnimation(alphaAnimation)
+    val transition: Transition = Fade()
+    transition.duration = 300
+    transition.addTarget(this)
+    TransitionManager.beginDelayedTransition(parent as ViewGroup?, transition)
+    setVisibility(visibility)
 }

@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.SellingBookDetailsActivity" />
+        <activity android:name=".activities.selling_book_details.SellingBookDetailsActivity" />
         <activity android:name=".activities.PdfViewActivity" />
         <activity
             android:name=".activities.AddSellingBookActivity"
@@ -23,7 +23,7 @@
         <activity android:name=".activities.registration.RegistrationActivity" />
         <activity android:name=".activities.book_details.BookDetailsActivity" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.main.MainActivity"
             android:label="@string/title_activity_main"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activities.LoginActivity">

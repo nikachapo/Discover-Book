@@ -12,19 +12,20 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
 
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".activities.SellingBookDetailsActivity">
+            android:background="@mipmap/bg_circles"
+            tools:context=".activities.selling_book_details.SellingBookDetailsActivity">
 
 
             <ImageView
                 android:id="@+id/sellingBookDetailsPublisherImageView"
+                imageFromUrl="@{sellingBook.ownerProfileUrl}"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="28dp"
-                imageFromUrl="@{sellingBook.ownerProfileUrl}"
                 app:layout_constraintStart_toStartOf="@+id/sellDetailsImageView"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_account_24dp" />
@@ -34,9 +35,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:text="@{sellingBook.publisher}"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
-                android:text="@{sellingBook.publisher}"
                 app:layout_constraintStart_toEndOf="@+id/sellingBookDetailsPublisherImageView"
                 app:layout_constraintTop_toTopOf="@+id/sellingBookDetailsPublisherImageView"
                 tools:text="Nika chapidze" />
@@ -51,11 +52,11 @@
 
             <ImageView
                 android:id="@+id/sellDetailsImageView"
+                imageFromUrl="@{sellingBook.photoUrl}"
                 android:layout_width="200dp"
-                android:transitionName="imageTransition"
                 android:layout_height="150dp"
                 android:layout_marginTop="24dp"
-                imageFromUrl="@{sellingBook.photoUrl}"
+                android:transitionName="imageTransition"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.075"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,11 +67,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
                 android:drawableStart="@drawable/ic_eye_24dp"
-                android:textSize="16sp"
                 android:gravity="center_vertical"
                 android:text="@{String.valueOf(sellingBook.seenCount)}"
-                android:layout_marginEnd="16dp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sellingBookDetailsAuthorsTV"
                 tools:text="23" />
@@ -80,9 +81,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:textSize="24sp"
                 android:text="@{sellingBook.title}"
                 android:textColor="@android:color/black"
+                android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/sellDetailsImageView"
                 app:layout_constraintTop_toTopOf="@+id/sellDetailsImageView"
@@ -93,9 +94,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="18dp"
+                android:text="@{sellingBook.soldCount + `/` + sellingBook.count}"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
-                android:text="@{sellingBook.soldCount + `/` + sellingBook.count}"
                 app:layout_constraintStart_toEndOf="@+id/sellDetailsImageView"
                 app:layout_constraintTop_toBottomOf="@+id/sellingBookDetailsAuthorsTV"
                 tools:text="22/44" />
@@ -105,10 +106,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:gravity="center_vertical"
                 android:layout_marginEnd="16dp"
-                android:text="@{sellingBook.location}"
                 android:drawableStart="@drawable/ic_location_on_24dp"
+                android:gravity="center_vertical"
+                android:text="@{sellingBook.location}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Tbilisi" />
@@ -118,8 +119,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:textSize="16sp"
                 android:text="@{sellingBook.authors}"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/sellDetailsTitleTV"
@@ -136,18 +137,48 @@
                 app:layout_constraintTop_toBottomOf="@+id/sellDetailsImageView" />
 
             <TextView
+                android:id="@+id/descriptionTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{sellingBook.description}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="@{sellingBook.description}"
                 app:layout_constraintTop_toBottomOf="@+id/ratingBar"
                 tools:text="Description Description Description DescriptionDescriptionDescriptionDescriptionDescription" />
+
+            <TextView
+                android:id="@+id/sellingBookPriceTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/buyButton"
+                app:layout_constraintEnd_toStartOf="@+id/buyButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/buyButton"
+                tools:text="1000$" />
+
+            <Button
+                android:id="@+id/buyButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/toolbar_bg"
+                android:text="@string/buy"
+                android:textColor="@android:color/white"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.739"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionTV" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-        <include layout="@layout/comments_bottom_sheet"/>
+        <include android:id="@+id/bottomSheetLayout"
+            layout="@layout/comments_bottom_sheet" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

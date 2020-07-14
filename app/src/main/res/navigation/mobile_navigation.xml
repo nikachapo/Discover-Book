@@ -9,23 +9,47 @@
         android:id="@+id/navigation_home"
         android:name="com.example.fincar.fragments.home.HomeFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/home_fragment"/>
+        tools:layout="@layout/home_fragment">
+        <action android:id="@+id/navigation_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_store"
         android:name="com.example.fincar.fragments.store.StoreFragment"
         android:label="@string/store"
-        tools:layout="@layout/fragment_books_store"/>
+        tools:layout="@layout/fragment_books_store">
+        <action android:id="@+id/navigation_store"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_search"
         android:name="com.example.fincar.fragments.search_books.SearchBooksFragment"
         android:label="@string/search"
-        tools:layout="@layout/fragment_search_books"/>
+        tools:layout="@layout/fragment_search_books">
+        <action android:id="@+id/navigation_search"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.fincar.fragments.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action android:id="@+id/navigation_profile"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 </navigation>

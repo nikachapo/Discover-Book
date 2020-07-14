@@ -13,7 +13,8 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.book_details.BookDetailsActivity">
+        tools:context=".activities.book_details.BookDetailsActivity"
+        android:background="@mipmap/bg_circles">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -94,9 +95,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.285"
-                    app:sparkbutton_activeImage="@drawable/ic_star_active_24dp"
+                    app:sparkbutton_activeImage="@mipmap/ic_heart_red"
                     app:sparkbutton_iconSize="40dp"
-                    app:sparkbutton_inActiveImage="@drawable/ic_star_inactive_24dp"
+                    app:sparkbutton_inActiveImage="@mipmap/ic_heart_gray"
                     app:sparkbutton_primaryColor="@android:color/holo_orange_dark"
                     app:sparkbutton_secondaryColor="@android:color/holo_red_dark" />
 
@@ -135,7 +136,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{book.description}"
+                    android:text="@{book.categories}"
                     android:textColor="@android:color/black"
                     android:textSize="15sp"
                     tools:text="Description Description Description Description " />

@@ -1,5 +1,6 @@
 package com.example.fincar.activities
 
+import android.annotation.SuppressLint
 import android.net.http.SslError
 import android.os.Bundle
 import android.util.Log.d
@@ -8,6 +9,7 @@ import android.webkit.SslErrorHandler
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.airbnb.lottie.LottieAnimationView
@@ -21,11 +23,13 @@ import com.krishna.fileloader.request.FileLoadRequest
 import java.io.File
 
 const val EXTRA_PDF_URL = "extra-pdf-url"
+
 class PdfViewActivity : AppCompatActivity() {
 
     private lateinit var pdfView: PDFView
     private lateinit var loadingRootLayout: FrameLayout
     private lateinit var loadingAnimationView: LottieAnimationView
+    private lateinit var pagesTextView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf_view)
@@ -33,6 +37,7 @@ class PdfViewActivity : AppCompatActivity() {
         pdfView = findViewById(R.id.pdfView)
         loadingRootLayout = findViewById(R.id.loadingRootLayout)
         loadingAnimationView = findViewById(R.id.loadingAnimationView)
+        pagesTextView = findViewById(R.id.pagesTextView)
 
         val web = findViewById<WebView>(R.id.web)
 
@@ -55,7 +60,7 @@ class PdfViewActivity : AppCompatActivity() {
         }
 
         val bookUrl = intent.getStringExtra(EXTRA_PDF_URL)
-        d("bookUrl", bookUrl)
+
         web.loadUrl(bookUrl)
     }
 
@@ -65,6 +70,7 @@ class PdfViewActivity : AppCompatActivity() {
             .load(url)
             .fromDirectory("PDFFiles", FileLoader.DIR_EXTERNAL_PUBLIC)
             .asFile(object : FileRequestListener<File> {
+                @SuppressLint("SetTextI18n")
                 override fun onLoad(request: FileLoadRequest?, response: FileResponse<File>?) {
                     val pdfFile = response?.body
 
@@ -73,6 +79,9 @@ class PdfViewActivity : AppCompatActivity() {
                         .defaultPage(0)
                         .enableSwipe(true)
                         .enableDoubletap(true)
+                        .onPageChange { page, pageCount ->
+                            pagesTextView.text = "$page/$pageCount"
+                        }
                         .load()
 
                     Tools.cancelLoadingAnimation(loadingRootLayout, loadingAnimationView)

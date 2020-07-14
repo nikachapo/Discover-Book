@@ -7,17 +7,6 @@
     android:background="@drawable/search_bg"
     tools:context=".fragments.search_books.SearchBooksFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/searchSuggestionRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:itemCount="3"
-        tools:listitem="@layout/item_suggestion_layout" />
-
     <FrameLayout
         android:id="@+id/booksListContainer"
         android:layout_width="match_parent"

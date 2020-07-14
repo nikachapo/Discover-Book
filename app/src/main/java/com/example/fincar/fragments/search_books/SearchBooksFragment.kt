@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
-import com.example.fincar.layout_manager.LayoutManagerFactory
 import com.example.fincar.R
 import com.example.fincar.adapters.SuggestionsAdapter
 import com.example.fincar.app.SharedPreferenceUtil
@@ -21,7 +20,7 @@ import com.example.fincar.fragments.booksList.BookViewModel
 import com.example.fincar.fragments.booksList.BookViewModelFactory
 import com.example.fincar.fragments.booksList.BooksListFragment
 import com.example.fincar.layout_manager.ILayoutManagerFactory
-import kotlinx.android.synthetic.main.fragment_search_books.view.*
+import com.example.fincar.layout_manager.LayoutManagerFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,7 +43,7 @@ class SearchBooksFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         suggestions = SharedPreferenceUtil
             .getStringSet(SharedPreferenceUtil.KEY_SUGGESTIONS)!!.toMutableList()
-        initViews(view)
+        initViews()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -79,10 +78,11 @@ class SearchBooksFragment : BaseFragment() {
 
     }
 
-    private fun initViews(view: View) {
-        searchEditText = requireActivity().findViewById(R.id.searchEditText)
-        searchButton = requireActivity().findViewById(R.id.searchButton)
-        searchSuggestionRecyclerView = view.searchSuggestionRecyclerView
+    private fun initViews() {
+        val activity = requireActivity()
+        searchEditText = activity.findViewById(R.id.searchEditText)
+        searchButton = activity.findViewById(R.id.searchButton)
+        searchSuggestionRecyclerView = activity.findViewById(R.id.searchSuggestionRecyclerView)
         searchSuggestionRecyclerView.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 

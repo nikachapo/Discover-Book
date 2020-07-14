@@ -5,8 +5,6 @@ import android.content.Context;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fincar.adapters.CenterZoomLayoutManager;
-
 public abstract class LayoutManagerFactory {
     public static RecyclerView.LayoutManager create(Context context, int orientation, boolean isCenterZoomed){
         if(isCenterZoomed){

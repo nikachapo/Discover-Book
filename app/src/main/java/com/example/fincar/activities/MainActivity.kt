@@ -18,6 +18,7 @@ import com.example.fincar.activities.registration.RegistrationActivity
 import com.example.fincar.app.Tools.cancelLoadingAnimation
 import com.example.fincar.app.Tools.showToast
 import com.example.fincar.app.Tools.startLoadingAnimation
+import com.example.fincar.extensions.setVisibilityWithAnim
 import com.example.fincar.network.firebase.account.AccountChecker
 import com.example.fincar.network.firebase.account.CheckAccountCallbacks
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -59,10 +60,12 @@ class MainActivity : AppCompatActivity() {
         )
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if(destination.id == R.id.navigation_search){
-                searchEditText.visibility = View.VISIBLE
+                searchEditText.setVisibilityWithAnim(View.VISIBLE)
+                searchSuggestionRecyclerView.setVisibilityWithAnim(View.VISIBLE)
                 searchButton.setOnClickListener(null)
             }else{
-                searchEditText.visibility = View.GONE
+                searchEditText.setVisibilityWithAnim(View.GONE)
+                searchSuggestionRecyclerView.setVisibilityWithAnim(View.GONE)
                 searchButton.setOnClickListener(searchClickListener)
             }
 

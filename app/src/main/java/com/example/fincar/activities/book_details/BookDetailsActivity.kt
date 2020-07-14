@@ -4,7 +4,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +17,7 @@ import com.example.fincar.activities.PdfViewActivity
 import com.example.fincar.app.Tools
 import com.example.fincar.bean.book.GoogleBook
 import com.example.fincar.databinding.ActivityBookDetailsBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 const val EXTRA_BOOK = "extra-book"
 

@@ -11,6 +11,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.R
+import com.example.fincar.extensions.setVisibilityWithAnim
 import com.example.fincar.fragments.DatePickerFragment
 import kotlinx.android.synthetic.main.activity_add_selling_book.*
 import kotlinx.android.synthetic.main.dialog_layout.*
@@ -26,7 +27,7 @@ object Tools {
     fun startLoadingAnimation(loadingRootLayout: ViewGroup,
                               loadingAnimationView: LottieAnimationView) {
 
-        loadingRootLayout.visibility = View.VISIBLE
+        loadingRootLayout.setVisibilityWithAnim(View.VISIBLE)
         loadingAnimationView.playAnimation()
 
     }
@@ -34,7 +35,7 @@ object Tools {
     fun cancelLoadingAnimation(loadingRootLayout: ViewGroup,
                                loadingAnimationView: LottieAnimationView) {
 
-        loadingRootLayout.visibility = View.GONE
+        loadingRootLayout.setVisibilityWithAnim(View.GONE)
         loadingAnimationView.cancelAnimation()
 
     }

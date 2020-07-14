@@ -1,5 +1,7 @@
 package com.example.fincar.bean.book
 
+import com.google.firebase.database.FirebaseDatabase
+
 class SellingBook(var ownerId: String): Book() {
 
     constructor(): this("")
@@ -14,4 +16,18 @@ class SellingBook(var ownerId: String): Book() {
 
     fun isRated() = rating != 0.0
 
+    fun rate(numRate: Float){
+        val rating =
+            ((rating * ratedCount) +
+                    numRate) / (ratedCount + 1)
+
+        val bookRef = FirebaseDatabase.getInstance().reference
+            .child("selling_books")
+            .child(id)
+
+        bookRef.child("ratedCount")
+            .setValue(ratedCount + 1)
+        bookRef.child("rating")
+            .setValue(rating)
+    }
 }

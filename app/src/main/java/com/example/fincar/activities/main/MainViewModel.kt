@@ -3,7 +3,7 @@ package com.example.fincar.activities.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.fincar.bean.Account
+import com.example.fincar.models.Account
 import com.example.fincar.network.firebase.account.AccountDataObserver
 import com.example.fincar.network.firebase.account.FetchAccountDataCallbacks
 

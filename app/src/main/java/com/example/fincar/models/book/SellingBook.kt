@@ -1,6 +1,6 @@
-package com.example.fincar.bean.book
+package com.example.fincar.models.book
 
-import com.example.fincar.bean.comment.Comment
+import com.example.fincar.models.comment.Comment
 import com.example.fincar.network.firebase.FirebaseDbHelper
 import com.google.firebase.database.FirebaseDatabase
 
@@ -15,8 +15,6 @@ class SellingBook(var ownerId: String): Book() {
     var location: String = ""
     var rating: Double = 0.0
     var ratedCount = 0
-
-    fun isRated() = rating != 0.0
 
     fun rate(numRate: Float){
         val rating =
@@ -39,11 +37,12 @@ class SellingBook(var ownerId: String): Book() {
         .child("comments")
 
     fun increaseSeenCount(){
+        seenCount++
         FirebaseDatabase.getInstance()
             .getReference(FirebaseDbHelper.SELLING_BOOKS_KEY)
             .child(id)
             .child("seenCount")
-            .setValue(seenCount++)
+            .setValue(seenCount)
     }
 
     fun addComment(comment: Comment){
@@ -53,5 +52,21 @@ class SellingBook(var ownerId: String): Book() {
 
         bookCommentsRef.child(comment.id!!)
             .setValue(comment)
+    }
+
+    fun onSold(){
+        soldCount++
+        count--
+        FirebaseDatabase.getInstance()
+            .getReference(FirebaseDbHelper.SELLING_BOOKS_KEY)
+            .child(id)
+            .child("count")
+            .setValue(count)
+
+        FirebaseDatabase.getInstance()
+            .getReference(FirebaseDbHelper.SELLING_BOOKS_KEY)
+            .child(id)
+            .child("soldCount")
+            .setValue(soldCount)
     }
 }

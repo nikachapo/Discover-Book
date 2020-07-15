@@ -8,7 +8,7 @@
 
         <variable
             name="sellingBookItem"
-            type="com.example.fincar.bean.book.SellingBook" />
+            type="com.example.fincar.models.book.SellingBook" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -68,6 +68,7 @@
                 android:text="@{String.valueOf(sellingBookItem.price)}"
                 android:textColor="#FF6D00"
                 android:textSize="20sp"
+                android:drawableEnd="@mipmap/ic_coin"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/sellingBookAuthorsTV"
                 app:layout_constraintTop_toBottomOf="@+id/sellingBookAuthorsTV"

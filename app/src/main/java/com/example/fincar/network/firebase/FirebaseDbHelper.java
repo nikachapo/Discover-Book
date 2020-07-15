@@ -6,7 +6,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public abstract class FirebaseDbHelper {
-    protected static final String USERS_KEY = "users";
+    public static final String USERS_KEY = "users";
     public static final String SELLING_BOOKS_KEY = "selling_books";
 
     private final DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();

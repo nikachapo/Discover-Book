@@ -1,4 +1,4 @@
-package com.example.fincar.bean.book
+package com.example.fincar.models.book
 
 import androidx.room.PrimaryKey
 import java.io.Serializable

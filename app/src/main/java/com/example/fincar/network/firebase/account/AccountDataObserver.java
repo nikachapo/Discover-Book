@@ -2,7 +2,7 @@ package com.example.fincar.network.firebase.account;
 
 import androidx.annotation.NonNull;
 
-import com.example.fincar.bean.Account;
+import com.example.fincar.models.Account;
 import com.example.fincar.network.firebase.FirebaseRealtimeDbLifecycleObserver;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

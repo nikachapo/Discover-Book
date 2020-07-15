@@ -2,8 +2,8 @@ package com.example.fincar.network.firebase.upload;
 
 import androidx.annotation.NonNull;
 
-import com.example.fincar.bean.Account;
-import com.example.fincar.bean.book.SellingBook;
+import com.example.fincar.models.Account;
+import com.example.fincar.models.book.SellingBook;
 import com.example.fincar.network.firebase.FirebaseDbHelper;
 import com.google.firebase.database.DatabaseReference;
 

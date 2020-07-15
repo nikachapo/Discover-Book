@@ -6,178 +6,187 @@
     <data>
         <variable
             name="sellingBook"
-            type="com.example.fincar.bean.book.SellingBook" />
+            type="com.example.fincar.models.book.SellingBook" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_circles">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/bg_circles"
-            tools:context=".activities.selling_book_details.SellingBookDetailsActivity">
+            app:layout_anchorGravity="center"
+            android:layout_marginBottom="?attr/actionBarSize">
 
-
-            <ImageView
-                android:id="@+id/sellingBookDetailsPublisherImageView"
-                imageFromUrl="@{sellingBook.ownerProfileUrl}"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="28dp"
-                app:layout_constraintStart_toStartOf="@+id/sellDetailsImageView"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_account_24dp" />
-
-            <TextView
-                android:id="@+id/sellingBookDetailsPublisherTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@{sellingBook.publisher}"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/sellingBookDetailsPublisherImageView"
-                app:layout_constraintTop_toTopOf="@+id/sellingBookDetailsPublisherImageView"
-                tools:text="Nika chapidze" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{sellingBook.publishDate}"
-                app:layout_constraintStart_toStartOf="@+id/sellingBookDetailsPublisherTV"
-                app:layout_constraintTop_toBottomOf="@+id/sellingBookDetailsPublisherTV"
-                tools:text="8:33PM" />
-
-            <ImageView
-                android:id="@+id/sellDetailsImageView"
-                imageFromUrl="@{sellingBook.photoUrl}"
-                android:layout_width="200dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="24dp"
-                android:transitionName="imageTransition"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.075"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sellingBookDetailsLocationTV"
-                tools:src="@mipmap/ic_launcher" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:drawableStart="@drawable/ic_eye_24dp"
-                android:gravity="center_vertical"
-                android:text="@{String.valueOf(sellingBook.seenCount)}"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sellingBookDetailsAuthorsTV"
-                tools:text="23" />
-
-            <TextView
-                android:id="@+id/sellDetailsTitleTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@{sellingBook.title}"
-                android:textColor="@android:color/black"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/sellDetailsImageView"
-                app:layout_constraintTop_toTopOf="@+id/sellDetailsImageView"
-                tools:text="Title" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="18dp"
-                android:text="@{sellingBook.soldCount + `/` + sellingBook.count}"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/sellDetailsImageView"
-                app:layout_constraintTop_toBottomOf="@+id/sellingBookDetailsAuthorsTV"
-                tools:text="22/44" />
-
-            <TextView
-                android:id="@+id/sellingBookDetailsLocationTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="16dp"
-                android:drawableStart="@drawable/ic_location_on_24dp"
-                android:gravity="center_vertical"
-                android:text="@{sellingBook.location}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Tbilisi" />
-
-            <TextView
-                android:id="@+id/sellingBookDetailsAuthorsTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@{sellingBook.authors}"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/sellDetailsTitleTV"
-                app:layout_constraintTop_toBottomOf="@+id/sellDetailsTitleTV"
-                tools:text="author1, author1, author1, author1" />
-
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:numStars="5"
-                app:layout_constraintStart_toStartOf="@+id/sellDetailsImageView"
-                app:layout_constraintTop_toBottomOf="@+id/sellDetailsImageView" />
-
-            <TextView
-                android:id="@+id/descriptionTV"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="@{sellingBook.description}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBar"
-                tools:text="Description Description Description DescriptionDescriptionDescriptionDescriptionDescription" />
+                android:layout_height="match_parent"
+                tools:context=".activities.selling_book_details.SellingBookDetailsActivity">
 
-            <TextView
-                android:id="@+id/sellingBookPriceTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@+id/buyButton"
-                app:layout_constraintEnd_toStartOf="@+id/buyButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buyButton"
-                tools:text="1000$" />
 
-            <Button
-                android:id="@+id/buyButton"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/toolbar_bg"
-                android:text="@string/buy"
-                android:textColor="@android:color/white"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.739"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTV" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/sellingBookDetailsPublisherImageView"
+                    imageFromUrl="@{sellingBook.ownerProfileUrl}"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="28dp"
+                    app:layout_constraintStart_toStartOf="@+id/sellDetailsImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_account_24dp" />
+
+                <TextView
+                    android:id="@+id/sellingBookDetailsPublisherTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{sellingBook.publisher}"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toEndOf="@+id/sellingBookDetailsPublisherImageView"
+                    app:layout_constraintTop_toTopOf="@+id/sellingBookDetailsPublisherImageView"
+                    tools:text="Nika chapidze" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{sellingBook.publishDate}"
+                    app:layout_constraintStart_toStartOf="@+id/sellingBookDetailsPublisherTV"
+                    app:layout_constraintTop_toBottomOf="@+id/sellingBookDetailsPublisherTV"
+                    tools:text="8:33PM" />
+
+                <ImageView
+                    android:id="@+id/sellDetailsImageView"
+                    imageFromUrl="@{sellingBook.photoUrl}"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="24dp"
+                    android:scaleType="centerCrop"
+                    android:transitionName="imageTransition"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.075"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sellingBookDetailsLocationTV"
+                    tools:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:drawableStart="@drawable/ic_eye_24dp"
+                    android:gravity="center_vertical"
+                    android:text="@{String.valueOf(sellingBook.seenCount)}"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sellingBookDetailsAuthorsTV"
+                    tools:text="23" />
+
+                <TextView
+                    android:id="@+id/sellDetailsTitleTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{sellingBook.title}"
+                    android:textColor="@android:color/black"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/sellDetailsImageView"
+                    app:layout_constraintTop_toTopOf="@+id/sellDetailsImageView"
+                    tools:text="Title" />
+
+                <TextView
+                    android:id="@+id/balanceTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="18dp"
+                    android:text="@{sellingBook.soldCount + `/` + sellingBook.count}"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toEndOf="@+id/sellDetailsImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/sellingBookDetailsAuthorsTV"
+                    tools:text="22/44" />
+
+                <TextView
+                    android:id="@+id/sellingBookDetailsLocationTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:drawableStart="@drawable/ic_location_on_24dp"
+                    android:gravity="center_vertical"
+                    android:text="@{sellingBook.location}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Tbilisi" />
+
+                <TextView
+                    android:id="@+id/sellingBookDetailsAuthorsTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@{sellingBook.authors}"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/sellDetailsTitleTV"
+                    app:layout_constraintTop_toBottomOf="@+id/sellDetailsTitleTV"
+                    tools:text="author1, author1, author1, author1" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:numStars="5"
+                    app:layout_constraintStart_toStartOf="@+id/sellDetailsImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/sellDetailsImageView" />
+
+                <TextView
+                    android:id="@+id/descriptionTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="@{sellingBook.description}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+                    tools:text="Description Description Description DescriptionDescriptionDescriptionDescriptionDescription" />
+
+                <TextView
+                    android:id="@+id/sellingBookPriceTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:drawableEnd="@mipmap/ic_coin"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24sp"
+                    android:text="@{String.valueOf(sellingBook.price)}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.49"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/descriptionTV"
+                    tools:text="1000" />
+
+                <Button
+                    android:id="@+id/buyButton"
+                    android:layout_width="200dp"
+                    android:layout_height="100dp"
+                    android:background="@mipmap/buy_now_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sellingBookPriceTV" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
         <include android:id="@+id/bottomSheetLayout"
             layout="@layout/comments_bottom_sheet" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

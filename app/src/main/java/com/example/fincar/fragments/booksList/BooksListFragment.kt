@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fincar.R
 import com.example.fincar.adapters.BookAdapter
 import com.example.fincar.adapters.SellingBookAdapter
-import com.example.fincar.bean.Account
-import com.example.fincar.bean.book.GoogleBook
-import com.example.fincar.bean.book.SellingBook
+import com.example.fincar.models.Account
+import com.example.fincar.models.book.GoogleBook
+import com.example.fincar.models.book.SellingBook
 import com.example.fincar.fragments.BaseFragment
 import com.example.fincar.layout_manager.ILayoutManagerFactory
 import com.example.fincar.layout_manager.LayoutManagerFactory

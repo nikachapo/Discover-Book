@@ -14,7 +14,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.R
 import com.example.fincar.adapters.SuggestionsAdapter
 import com.example.fincar.app.SharedPreferenceUtil
-import com.example.fincar.bean.book.GoogleBook
+import com.example.fincar.models.book.GoogleBook
 import com.example.fincar.fragments.BaseFragment
 import com.example.fincar.fragments.booksList.BookViewModel
 import com.example.fincar.fragments.booksList.BookViewModelFactory

@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fincar.R
 import com.example.fincar.activities.main.MainViewModel
 import com.example.fincar.app.Tools
-import com.example.fincar.bean.Account
-import com.example.fincar.bean.book.SellingBook
+import com.example.fincar.models.Account
+import com.example.fincar.models.book.SellingBook
 import com.example.fincar.fragments.BaseFragment
 import com.example.fincar.fragments.booksList.BooksListFragment
 import com.example.fincar.layout_manager.ILayoutManagerFactory

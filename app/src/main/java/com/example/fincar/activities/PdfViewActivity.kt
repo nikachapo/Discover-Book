@@ -1,18 +1,16 @@
 package com.example.fincar.activities
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.net.http.SslError
 import android.os.Bundle
-import android.util.Log.d
 import android.view.View
 import android.webkit.SslErrorHandler
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.R
 import com.example.fincar.app.Tools
 import com.github.barteksc.pdfviewer.PDFView
@@ -27,18 +25,19 @@ const val EXTRA_PDF_URL = "extra-pdf-url"
 class PdfViewActivity : AppCompatActivity() {
 
     private lateinit var pdfView: PDFView
-    private lateinit var loadingRootLayout: FrameLayout
-    private lateinit var loadingAnimationView: LottieAnimationView
     private lateinit var pagesTextView: TextView
+    private lateinit var dialog: Dialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf_view)
 
         pdfView = findViewById(R.id.pdfView)
-        loadingRootLayout = findViewById(R.id.loadingRootLayout)
-        loadingAnimationView = findViewById(R.id.loadingAnimationView)
         pagesTextView = findViewById(R.id.pagesTextView)
-
+        dialog = Tools.animationDialog(this, "Loading Book",
+            "downloading_book.json", "Cancel", View.OnClickListener {
+                onBackPressed()
+                finish()
+            })
         val web = findViewById<WebView>(R.id.web)
 
         web.setDownloadListener { url, _, _, _, _ ->
@@ -65,7 +64,7 @@ class PdfViewActivity : AppCompatActivity() {
     }
 
     private fun loadPdfFromUrl(url: String) {
-        Tools.startLoadingAnimation(loadingRootLayout, loadingAnimationView)
+        dialog.show()
         FileLoader.with(this)
             .load(url)
             .fromDirectory("PDFFiles", FileLoader.DIR_EXTERNAL_PUBLIC)
@@ -84,8 +83,7 @@ class PdfViewActivity : AppCompatActivity() {
                         }
                         .load()
 
-                    Tools.cancelLoadingAnimation(loadingRootLayout, loadingAnimationView)
-
+                    dialog.dismiss()
                 }
 
                 override fun onError(request: FileLoadRequest?, t: Throwable?) {

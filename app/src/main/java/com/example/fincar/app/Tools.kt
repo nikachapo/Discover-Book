@@ -52,7 +52,8 @@ object Tools {
         datePicker.show(fragmentManager, "date picker")
     }
 
-    fun showDialog(context: Context, title:String, assetName: String){
+    fun animationDialog(context: Context, title:String, assetName: String,
+                        buttonText:String, onButtonClickListener: View.OnClickListener):Dialog{
         val dialog = Dialog(context)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -64,15 +65,16 @@ object Tools {
 
         dialog.window!!.attributes = params
         dialog.dialogTitleTV.text = title
-
+        dialog.dialogOkButton.text = buttonText
 
         dialog.dialogAnimationView.setAnimation(assetName)
 
         dialog.dialogOkButton.setOnClickListener {
             dialog.dismiss()
+            onButtonClickListener.onClick(it)
         }
 
-        dialog.show()
+        return dialog
     }
 
     fun startTransition(rootLayout: ViewGroup) {

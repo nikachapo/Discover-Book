@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/profile_bg">
 
-    <include layout="@layout/search_toolbar_layout"/>
+    <include layout="@layout/search_toolbar_layout" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
-        android:layout_gravity="bottom"
         android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="bottom"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         android:background="?android:attr/windowBackground"
@@ -36,13 +36,14 @@
         app:navGraph="@navigation/mobile_navigation" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addBookButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:id="@+id/addBookButton"
-        android:src="@drawable/ic_add_book"
         android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="64dp"
-        android:layout_marginEnd="16dp"/>
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_add_book" />
 
     <include layout="@layout/loading_layout" />
 

@@ -9,7 +9,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fincar.activities.book_details.BookDetailsActivity
 import com.example.fincar.activities.book_details.EXTRA_BOOK
-import com.example.fincar.bean.book.GoogleBook
+import com.example.fincar.models.book.GoogleBook
 import com.example.fincar.databinding.ItemGoogleBookBinding
 
 class BookAdapter(

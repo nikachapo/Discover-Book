@@ -3,15 +3,15 @@ package com.example.fincar.activities.selling_book_details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.fincar.bean.book.SellingBook
-import com.example.fincar.bean.comment.Comment
+import com.example.fincar.models.book.SellingBook
+import com.example.fincar.models.comment.Comment
 import com.example.fincar.network.firebase.FirebaseDbHelper
 import com.google.firebase.database.*
 import java.text.DateFormat
 import java.util.*
 
 class SellingBookDetailsViewModel(
-    private val account: com.example.fincar.bean.Account?,
+    private val account: com.example.fincar.models.Account?,
     private val sellingBook: SellingBook
 ) : ViewModel() {
 

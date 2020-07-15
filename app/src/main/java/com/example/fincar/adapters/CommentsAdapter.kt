@@ -3,7 +3,7 @@ package com.example.fincar.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fincar.bean.comment.Comment
+import com.example.fincar.models.comment.Comment
 import com.example.fincar.databinding.ItemCommentLayoutBinding
 
 class CommentsAdapter : RecyclerView.Adapter<CommentsAdapter.CommentsViewHolder>() {

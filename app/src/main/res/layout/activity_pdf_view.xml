@@ -25,7 +25,7 @@
         tools:text="12/56"
         android:textSize="24sp"
         android:padding="4dp"
+        android:textColor="@android:color/white"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="16dp"/>
-    <include layout="@layout/loading_layout"/>
 </FrameLayout>

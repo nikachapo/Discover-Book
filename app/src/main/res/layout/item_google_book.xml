@@ -6,7 +6,7 @@
     <data>
         <variable
             name="bookItem"
-            type="com.example.fincar.bean.book.GoogleBook" />
+            type="com.example.fincar.models.book.GoogleBook" />
     </data>
 
     <androidx.cardview.widget.CardView

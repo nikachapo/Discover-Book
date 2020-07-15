@@ -6,32 +6,38 @@
     <data>
         <variable
             name="user"
-            type="com.example.fincar.bean.Account" />
+            type="com.example.fincar.models.Account" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_triangles">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp"
+            android:src="@mipmap/ic_back"
+            />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:id="@+id/saveButton"
             android:layout_marginTop="16dp"
+            android:src="@mipmap/ic_save"
             android:layout_marginEnd="8dp"
+            android:scaleType="center"
             android:layout_gravity="end"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="12dp"
-            android:layout_margin="30dp">
+            android:layout_margin="30dp"
+            app:cardBackgroundColor="#5BFFFEFE">
 
             <ScrollView
                 android:layout_width="match_parent"

@@ -1,16 +1,18 @@
 package com.example.fincar.activities.registration
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.fincar.R
 import com.example.fincar.app.Tools
 import com.example.fincar.app.Tools.showToast
-import com.example.fincar.bean.Account
+import com.example.fincar.models.Account
 import com.example.fincar.databinding.ActivityRegistrationBinding
 import com.example.fincar.extensions.loadImage
 import com.example.fincar.network.firebase.upload.UploadDataCallbacks
@@ -34,6 +36,8 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
     private val uploader = Uploader()
 
+    private lateinit var dialog: Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,6 +47,11 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
         setListeners()
 
+        dialog = Tools.animationDialog(this, "Saving Data", "uploading.json",
+        "Cancel", View.OnClickListener {
+                onBackPressed()
+                finish()
+            })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -68,9 +77,9 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         binding.saveButton.setOnClickListener {
 
             if (isEveryFieldValid()) {
-                if(currentAccount == null){
+                if (currentAccount == null) {
                     registerAccount()
-                }else{
+                } else {
                     updateAccountData()
                 }
             }
@@ -109,20 +118,22 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     private fun registerAccount() {
-
+        dialog.show()
         if (imageUri != null) {
-            FirebaseStorageHelper.putFileToStorage(FirebaseStorageHelper.DIR_USER_PICTURES,imageUri!!,
+            FirebaseStorageHelper.putFileToStorage(FirebaseStorageHelper.DIR_USER_PICTURES,
+                imageUri!!,
                 object : UploadFileListener {
-                override fun onSuccess(url: String) {
-                    imageUrl = url
-                    writeDataToRD()
-                }
+                    override fun onSuccess(url: String) {
+                        imageUrl = url
+                        writeDataToRD()
+                    }
 
-                override fun onError(message: String) {
-                    showToast(this@RegistrationActivity, message)
-                }
+                    override fun onError(message: String) {
+                        showToast(this@RegistrationActivity, message)
+                        dialog.dismiss()
+                    }
 
-            })
+                })
         } else {
             imageUrl = DEFAULT_IMAGE_URL
             writeDataToRD()

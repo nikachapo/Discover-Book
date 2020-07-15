@@ -21,11 +21,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val currentFirebaseUser = FirebaseAuth.getInstance().currentUser
-
         handler = Handler()
         runnable = Runnable {
-            if(currentFirebaseUser == null){
+            if(FirebaseAuth.getInstance().currentUser == null){
                 showSignInOption()
             }else startMainActivity()
         }

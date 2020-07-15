@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.fincar.bean.book.GoogleBook
+import com.example.fincar.models.book.GoogleBook
 
 
 @Database(entities = [GoogleBook::class], version = 1, exportSchema = false)

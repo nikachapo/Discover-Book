@@ -6,7 +6,7 @@
     <data>
         <variable
             name="userModel"
-            type="com.example.fincar.bean.Account" />
+            type="com.example.fincar.models.Account" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -20,6 +20,23 @@
             android:gravity="center"
             android:orientation="vertical"
             tools:context=".fragments.profile.ProfileFragment">
+
+
+
+            <TextView
+                android:id="@+id/balanceTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:drawableEnd="@mipmap/ic_coin"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                android:text="@{String.valueOf(userModel.balance)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+                tools:text="1000$" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -47,14 +64,15 @@
                 tools:text="@string/first_name" />
 
             <TextView
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{userModel.location}"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:drawableStart="@drawable/ic_location_on_24dp"
+                android:text="@{userModel.location}"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/location" />
@@ -69,6 +87,7 @@
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -97,15 +116,15 @@
                     android:gravity="center"
                     android:text="@{String.valueOf(userModel.purchasedBooksCount) + `\n` + `Purchased`}" />
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    tools:text="4 \n Reviews"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"
-                    android:text="@{String.valueOf(userModel.reviewsCount) + `\n` + `Reviews`}" />
+<!--                <TextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center"-->
+<!--                    tools:text="4 \n Reviews"-->
+<!--                    android:textColor="@android:color/black"-->
+<!--                    android:textSize="20sp"-->
+<!--                    android:text="@{String.valueOf(userModel.reviewsCount) + `\n` + `Reviews`}" />-->
 
                 <TextView
                     android:layout_width="0dp"
@@ -124,15 +143,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
                 android:drawableEnd="@drawable/ic_star_active_24dp"
                 android:text="@string/favourites"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/starredBooksListContainer"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/balanceTV" />
 
             <FrameLayout
                 android:id="@+id/starredBooksListContainer"
@@ -143,6 +162,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/favouritesLabel" />
 
+            <Button
+                android:id="@+id/logOutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_out"
+                android:textAllCaps="false"
+                android:gravity="center_vertical"
+                android:background="@android:color/transparent"
+                android:drawableStart="@mipmap/ic_logout"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

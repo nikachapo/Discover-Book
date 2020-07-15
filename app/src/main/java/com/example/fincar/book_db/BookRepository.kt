@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fincar.app.App
 import com.example.fincar.app.Tools.showToast
-import com.example.fincar.bean.book.GoogleBook
+import com.example.fincar.models.book.GoogleBook
 import com.example.fincar.network.books_api.BooksApiRequest
 import com.example.fincar.network.books_api.RequestCallBacks
 import org.json.JSONObject

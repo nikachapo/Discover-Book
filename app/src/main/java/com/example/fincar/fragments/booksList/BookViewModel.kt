@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.fincar.bean.book.GoogleBook
+import com.example.fincar.models.book.GoogleBook
 import com.example.fincar.book_db.BookRepository
 
 class BookViewModel(q: String?) : ViewModel() {

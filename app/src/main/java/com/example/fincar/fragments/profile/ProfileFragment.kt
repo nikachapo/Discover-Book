@@ -12,16 +12,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
-import com.example.fincar.layout_manager.LayoutManagerFactory
 import com.example.fincar.R
+import com.example.fincar.activities.LoginActivity
 import com.example.fincar.activities.main.MainViewModel
 import com.example.fincar.activities.registration.EXTRA_ACCOUNT
 import com.example.fincar.activities.registration.RegistrationActivity
 import com.example.fincar.app.Tools
-import com.example.fincar.bean.book.GoogleBook
+import com.example.fincar.models.book.GoogleBook
 import com.example.fincar.databinding.FragmentProfileBinding
 import com.example.fincar.fragments.booksList.BooksListFragment
 import com.example.fincar.layout_manager.ILayoutManagerFactory
+import com.example.fincar.layout_manager.LayoutManagerFactory
+import com.firebase.ui.auth.AuthUI
+
 
 class ProfileFragment : Fragment() {
 
@@ -39,7 +42,22 @@ class ProfileFragment : Fragment() {
     ): View? {
         val layoutInflater = LayoutInflater.from(container?.context)
         binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
+        binding.logOutButton.setOnClickListener{
+            logOut()
+        }
         return binding.root
+    }
+
+    private fun logOut() {
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        AuthUI.getInstance()
+            .signOut(requireContext())
+            .addOnSuccessListener {
+                requireContext()
+                    .startActivity(intent)
+                requireActivity().finish()
+            }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -2,7 +2,7 @@ package com.example.fincar.network.firebase.selling_books;
 
 import androidx.annotation.NonNull;
 
-import com.example.fincar.bean.book.SellingBook;
+import com.example.fincar.models.book.SellingBook;
 import com.example.fincar.network.firebase.FirebaseRealtimeDbLifecycleObserver;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

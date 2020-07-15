@@ -7,8 +7,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fincar.R
 import com.example.fincar.app.Tools
-import com.example.fincar.bean.Account
-import com.example.fincar.bean.book.SellingBook
+import com.example.fincar.models.Account
+import com.example.fincar.models.book.SellingBook
 import com.example.fincar.extensions.loadImage
 import com.example.fincar.network.firebase.account.AccountDataObserver
 import com.example.fincar.network.firebase.account.FetchAccountDataCallbacks
@@ -59,6 +59,11 @@ class AddSellingBookActivity : AppCompatActivity() {
     }
 
     private fun uploadData() {
+        Tools.animationDialog(this, "Uploading Book", "uploading.json",
+            "Cancel", View.OnClickListener {
+                onBackPressed()
+                finish()
+            }).show()
         if (imageUri != null) {
             FirebaseStorageHelper
                 .putFileToStorage(FirebaseStorageHelper.DIR_BOOKS_PICTURES, imageUri!!,
@@ -73,6 +78,7 @@ class AddSellingBookActivity : AppCompatActivity() {
 
                         override fun onError(message: String) {
                             Tools.showToast(this@AddSellingBookActivity, message)
+                            finish()
                         }
 
                     })
@@ -90,7 +96,9 @@ class AddSellingBookActivity : AppCompatActivity() {
             book.count = sellingBookAmountEditText.text.toString().toInt()
             book.publishDate = currentDateString
             book.photoUrl = imageUrl
+            book.authors = sellingBookAuthorsEditText.text.toString()
             book.ownerProfileUrl = currentUser!!.imageUrl!!
+            book.categories = sellingBookCategorySpinner.selectedItem.toString()
             book.publisher = "${currentUser!!.firstName} ${currentUser!!.lastName}"
         }
 

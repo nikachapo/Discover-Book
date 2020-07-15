@@ -9,8 +9,8 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fincar.activities.registration.EXTRA_ACCOUNT
 import com.example.fincar.activities.selling_book_details.SellingBookDetailsActivity
-import com.example.fincar.bean.Account
-import com.example.fincar.bean.book.SellingBook
+import com.example.fincar.models.Account
+import com.example.fincar.models.book.SellingBook
 import com.example.fincar.databinding.ItemSellingBookBinding
 
 const val EXTRA_SELLING_BOOK = "extra_selling_book"

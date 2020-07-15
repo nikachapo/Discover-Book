@@ -2,7 +2,7 @@ package com.example.fincar.activities.book_details
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.fincar.bean.book.GoogleBook
+import com.example.fincar.models.book.GoogleBook
 import com.example.fincar.book_db.BookRepository
 
 class BookDetailsViewModel(application: Application) : AndroidViewModel(application) {

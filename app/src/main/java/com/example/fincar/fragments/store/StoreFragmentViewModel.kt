@@ -3,7 +3,7 @@ package com.example.fincar.fragments.store
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.fincar.bean.book.SellingBook
+import com.example.fincar.models.book.SellingBook
 
 class StoreFragmentViewModel : ViewModel() {
 

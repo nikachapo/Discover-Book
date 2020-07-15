@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -63,7 +62,6 @@ class MainActivity : AppCompatActivity() {
     private fun addLifecycleObservers() {
         accountChecker = AccountChecker(checkUserCallback)
         lifecycle.addObserver(accountChecker)
-        lifecycle.addObserver(mainViewModel.accountDataObserver)
     }
 
     private fun initViewModel() {
@@ -90,9 +88,16 @@ class MainActivity : AppCompatActivity() {
             if (destination.id == R.id.navigation_search) {
                 searchEditText.setVisibilityWithAnim(View.VISIBLE)
                 searchButton.setOnClickListener(null)
+                return@addOnDestinationChangedListener
             } else {
                 searchEditText.setVisibilityWithAnim(View.GONE)
                 searchButton.setOnClickListener(searchClickListener)
+            }
+
+            if(destination.id == R.id.navigation_store){
+                addBookButton.show()
+            }else{
+                addBookButton.hide()
             }
 
         }
@@ -126,6 +131,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun onExists() {
             cancelLoadingAnimation(loadingRootLayout, loadingAnimationView)
+            lifecycle.addObserver(mainViewModel.accountDataObserver)
         }
 
         override fun onNotFound() {

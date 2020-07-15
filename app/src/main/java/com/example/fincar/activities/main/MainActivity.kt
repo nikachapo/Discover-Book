@@ -79,10 +79,9 @@ class MainActivity : AppCompatActivity() {
     private fun setUpNavigation() {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.navigation_home, R.id.navigation_store, R.id.navigation_profile)
+            setOf(R.id.navigation_home, R.id.navigation_store,
+                R.id.navigation_read, R.id.navigation_profile)
         )
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.navigation_search) {

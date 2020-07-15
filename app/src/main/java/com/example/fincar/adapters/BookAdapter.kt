@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,11 @@ class BookAdapter(
         fun onBind() {
 
             val book = googleBooks[adapterPosition]
+            if(book.isPdfAvailable){
+                bookItemBinding.readProgressBar.visibility = View.VISIBLE
+            }else{
+                bookItemBinding.readProgressBar.visibility = View.GONE
+            }
             bookItemBinding.bookItem = book
             bookItemBinding.root.setOnClickListener {
 

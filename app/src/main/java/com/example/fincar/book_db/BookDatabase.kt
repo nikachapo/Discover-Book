@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.fincar.models.book.GoogleBook
 
 
-@Database(entities = [GoogleBook::class], version = 1, exportSchema = false)
+@Database(entities = [GoogleBook::class], version = 2, exportSchema = false)
 abstract class BookDatabase : RoomDatabase() {
     abstract fun noteDao(): BookDao
 

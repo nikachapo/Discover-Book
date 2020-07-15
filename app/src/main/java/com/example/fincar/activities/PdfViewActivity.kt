@@ -12,7 +12,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fincar.R
+import com.example.fincar.activities.book_details.EXTRA_BOOK
 import com.example.fincar.app.Tools
+import com.example.fincar.book_db.BookRepository
+import com.example.fincar.models.book.GoogleBook
 import com.github.barteksc.pdfviewer.PDFView
 import com.krishna.fileloader.FileLoader
 import com.krishna.fileloader.listener.FileRequestListener
@@ -20,16 +23,21 @@ import com.krishna.fileloader.pojo.FileResponse
 import com.krishna.fileloader.request.FileLoadRequest
 import java.io.File
 
-const val EXTRA_PDF_URL = "extra-pdf-url"
-
 class PdfViewActivity : AppCompatActivity() {
 
     private lateinit var pdfView: PDFView
     private lateinit var pagesTextView: TextView
     private lateinit var dialog: Dialog
+
+    private lateinit var bookRepository: BookRepository
+
+    private lateinit var book: GoogleBook
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdf_view)
+
+        bookRepository = BookRepository(application)
 
         pdfView = findViewById(R.id.pdfView)
         pagesTextView = findViewById(R.id.pagesTextView)
@@ -58,9 +66,9 @@ class PdfViewActivity : AppCompatActivity() {
             }
         }
 
-        val bookUrl = intent.getStringExtra(EXTRA_PDF_URL)
+        book = intent.getSerializableExtra(EXTRA_BOOK) as GoogleBook
 
-        web.loadUrl(bookUrl)
+        web.loadUrl(book.pdfLink)
     }
 
     private fun loadPdfFromUrl(url: String) {
@@ -75,11 +83,12 @@ class PdfViewActivity : AppCompatActivity() {
 
                     pdfView.fromFile(pdfFile)
                         .password(null)
-                        .defaultPage(0)
+                        .defaultPage(book.readProgress)
                         .enableSwipe(true)
                         .enableDoubletap(true)
                         .onPageChange { page, pageCount ->
                             pagesTextView.text = "$page/$pageCount"
+                            book.readProgress = (pageCount * page) / 100
                         }
                         .load()
 
@@ -92,4 +101,15 @@ class PdfViewActivity : AppCompatActivity() {
 
             })
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bookRepository.update(book)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
 }

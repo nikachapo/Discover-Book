@@ -17,10 +17,4 @@ class ProfileFragmentViewModel(application: Application) : AndroidViewModel(appl
     fun getStarredBooks(): LiveData<List<GoogleBook>>? {
         return repository?.getStarredBooks()
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        d("Cleeeeeeeeeared","yeaaa sorry (((bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
-
-    }
 }

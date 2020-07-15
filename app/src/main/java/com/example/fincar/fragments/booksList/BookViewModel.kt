@@ -1,13 +1,12 @@
 package com.example.fincar.fragments.booksList
 
 
-import android.util.Log.d
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.example.fincar.models.book.GoogleBook
 import com.example.fincar.book_db.BookRepository
+import com.example.fincar.models.book.GoogleBook
 
 class BookViewModel(q: String?) : ViewModel() {
 
@@ -25,11 +24,6 @@ class BookViewModel(q: String?) : ViewModel() {
 
     fun search(q: String?) {
         if (q != null) searchStringLive.value = q
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        d("Cleeeeeeeeeared","yeaaa sorry (((aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     }
 
 }

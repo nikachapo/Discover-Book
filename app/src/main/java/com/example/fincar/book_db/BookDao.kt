@@ -20,4 +20,6 @@ interface BookDao {
     @Query("SELECT COUNT(id) FROM book_table WHERE id=:id")
     fun bookCount(id: String): LiveData<Int>
 
+    @Query("SELECT * FROM book_table WHERE isPdfAvailable = 1" )
+    fun getBooksWithPDF(): LiveData<List<GoogleBook>>
 }

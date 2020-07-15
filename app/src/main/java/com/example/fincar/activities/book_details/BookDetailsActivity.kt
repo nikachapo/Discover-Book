@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.fincar.R
-import com.example.fincar.activities.EXTRA_PDF_URL
 import com.example.fincar.activities.PdfViewActivity
 import com.example.fincar.app.Tools
 import com.example.fincar.models.book.GoogleBook
@@ -74,7 +73,7 @@ class BookDetailsActivity : AppCompatActivity() {
         binding.pdfButton.setOnClickListener {
             if(googleBook.isPdfAvailable){
                 startActivity(Intent(this, PdfViewActivity::class.java)
-                    .putExtra(EXTRA_PDF_URL, googleBook.pdfLink))
+                    .putExtra(EXTRA_BOOK, googleBook))
             }else{
                 Tools.showToast(this, "Pdf is not available")
             }

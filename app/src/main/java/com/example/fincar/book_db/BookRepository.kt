@@ -34,6 +34,12 @@ class BookRepository(application: Application?) {
         }
     }
 
+    fun update(googleBook: GoogleBook){
+        AsyncTask.execute {
+            bookDao?.update(googleBook)
+        }
+    }
+
     fun delete(googleBook: GoogleBook) {
         AsyncTask.execute {
             bookDao?.delete(googleBook)
@@ -125,6 +131,10 @@ class BookRepository(application: Application?) {
         } else {
             booksApiRequestCallBacks.onError("Book not found")
         }
+    }
+
+    fun getBooksWithPDF() : LiveData<List<GoogleBook>>{
+        return bookDao!!.getBooksWithPDF()
     }
 }
 

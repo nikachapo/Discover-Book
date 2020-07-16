@@ -102,10 +102,10 @@ class PdfViewActivity : AppCompatActivity() {
 
             })
     }
-
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+    
+     override fun onDestroy() {
+        super.onDestroy()
         bookRepository.update(book)
-        super.onSaveInstanceState(outState, outPersistentState)
     }
 
     override fun onBackPressed() {

@@ -2,12 +2,14 @@ package com.example.fincar.fragments.home
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fincar.R
 import com.example.fincar.adapters.CategoriesAdapter
+import com.example.fincar.adapters.PostsAdapter
 import com.example.fincar.models.Category
 import com.example.fincar.models.book.GoogleBook
 import com.example.fincar.fragments.BaseFragment
@@ -22,6 +24,9 @@ import kotlinx.android.synthetic.main.home_fragment.*
 class HomeFragment : BaseFragment() {
 
     private lateinit var viewModel: BookViewModel
+    private lateinit var homeViewModel: HomeViewModel
+
+    private lateinit var postsAdapter: PostsAdapter
 
     override fun getResourceId() = R.layout.home_fragment
 
@@ -38,19 +43,15 @@ class HomeFragment : BaseFragment() {
             Category("Art", Color.GREEN, "https://img.pngio.com/art-palette-web-design-icon-designer-art-png-400_400.png")
         )
 
-        val factory = BookViewModelFactory(categories[0].name)
-        viewModel = ViewModelProvider(this, factory).get(BookViewModel::class.java)
-        
-        categoriesRecyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
+        initViewModels(categories)
 
-        categoriesRecyclerView.adapter = CategoriesAdapter(categories,
-            object :CategoriesAdapter.OnCategoryClickListener{
-                override fun onClick(category: String) {
-                    viewModel.search("${BooksApiRequest.CATEGORY}${category}")
-                }
-            })
+        initViews(categories)
 
+        addObservers()
+
+    }
+
+    private fun addObservers() {
         viewModel.allBooksLiveData.observe(viewLifecycleOwner, Observer {
             childFragmentManager.beginTransaction()
                 .replace(
@@ -69,6 +70,36 @@ class HomeFragment : BaseFragment() {
                 .commit()
         })
 
+        homeViewModel.getPost().observe(viewLifecycleOwner, Observer { post ->
+            postsAdapter.addPost(post)
+        })
+    }
+
+    private fun initViewModels(categories: MutableList<Category>) {
+        val factory = BookViewModelFactory(categories[0].name)
+        viewModel = ViewModelProvider(this, factory).get(BookViewModel::class.java)
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+    }
+
+    private fun initViews(categories: MutableList<Category>) {
+        categoriesRecyclerView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        categoriesRecyclerView.adapter = CategoriesAdapter(
+            categories,
+            object : CategoriesAdapter.OnCategoryClickListener {
+                override fun onClick(category: String) {
+                    viewModel.search("${BooksApiRequest.CATEGORY}${category}")
+                }
+            })
+
+        postsAdapter = PostsAdapter(object :PostsAdapter.OnPostItemLongClickListener{
+            override fun onClick(position: Int) {
+
+            }
+
+        })
+        postsRecyclerView.adapter = postsAdapter
     }
 
 }

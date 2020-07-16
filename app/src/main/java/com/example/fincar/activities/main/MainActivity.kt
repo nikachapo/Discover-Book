@@ -16,6 +16,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.R
+import com.example.fincar.activities.AddPostActivity
 import com.example.fincar.activities.AddSellingBookActivity
 import com.example.fincar.activities.registration.EXTRA_ACCOUNT
 import com.example.fincar.activities.registration.RegistrationActivity
@@ -23,6 +24,7 @@ import com.example.fincar.app.Tools.cancelLoadingAnimation
 import com.example.fincar.app.Tools.showToast
 import com.example.fincar.app.Tools.startLoadingAnimation
 import com.example.fincar.extensions.setVisibilityWithAnim
+import com.example.fincar.models.Account
 import com.example.fincar.network.firebase.account.AccountChecker
 import com.example.fincar.network.firebase.account.CheckAccountCallbacks
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -40,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var accountChecker: AccountChecker
     private lateinit var navController: NavController
     private lateinit var addBookButton: FloatingActionButton
+    private lateinit var addPostButton: FloatingActionButton
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +60,8 @@ class MainActivity : AppCompatActivity() {
         addLifecycleObservers()
 
         setUpNavigation()
+
+        setClickListeners()
     }
 
     private fun addLifecycleObservers() {
@@ -64,16 +69,18 @@ class MainActivity : AppCompatActivity() {
         lifecycle.addObserver(accountChecker)
     }
 
+    private fun setClickListeners(){
+        addBookButton.setOnClickListener {
+            startActivity(Intent(this, AddSellingBookActivity::class.java))
+        }
+
+        addPostButton.setOnClickListener {
+            startActivity(Intent(this, AddPostActivity::class.java))
+        }
+    }
+
     private fun initViewModel() {
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        mainViewModel.getAccountLiveData().observe(this, Observer { account ->
-            addBookButton.setOnClickListener {
-                startActivity(
-                    Intent(this, AddSellingBookActivity::class.java)
-                        .putExtra(EXTRA_ACCOUNT, account)
-                )
-            }
-        })
     }
 
     private fun setUpNavigation() {
@@ -83,6 +90,7 @@ class MainActivity : AppCompatActivity() {
             setOf(R.id.navigation_home, R.id.navigation_store,
                 R.id.navigation_read, R.id.navigation_profile)
         )
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.navigation_search) {
                 searchEditText.setVisibilityWithAnim(View.VISIBLE)
@@ -98,6 +106,10 @@ class MainActivity : AppCompatActivity() {
             }else{
                 addBookButton.hide()
             }
+
+            if(destination.id == R.id.navigation_home){
+                addPostButton.show()
+            }else addPostButton.hide()
 
         }
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -119,6 +131,7 @@ class MainActivity : AppCompatActivity() {
         searchEditText = findViewById(R.id.searchEditText)
         searchButton = findViewById(R.id.searchButton)
         addBookButton = findViewById(R.id.addBookButton)
+        addPostButton = findViewById(R.id.addPostButton)
     }
 
     private val checkUserCallback = object :

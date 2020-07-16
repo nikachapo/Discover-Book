@@ -3,8 +3,8 @@
     package="com.example.fincar">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".app.App"
@@ -13,10 +13,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".activities.selling_book_details.SellingBookDetailsActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activities.AddPostActivity"
+            android:theme="@style/AppThemeDark"/>
+        <activity
+            android:name=".activities.selling_book_details.SellingBookDetailsActivity"
+            android:theme="@style/AppThemeDark" />
         <activity android:name=".activities.PdfViewActivity" />
         <activity
             android:name=".activities.AddSellingBookActivity"

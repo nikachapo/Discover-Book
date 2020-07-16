@@ -45,4 +45,6 @@
     <string name="buy">Buy</string>
     <string name="sign_out">Sign out</string>
     <string name="read">Read</string>
+    <string name="post_title">Post Title</string>
+    <string name="post">Post</string>
 </resources>

@@ -24,10 +24,10 @@ class AddSellingBookActivity : AppCompatActivity() {
 
     private var currentUser: Account? = null
     private val uploader = Uploader()
-    private lateinit var accountDataObserver: AccountDataObserver
     private var imageUri: Uri? = null
     private var imageUrl = ""
     private lateinit var currentDateString: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_selling_book)
@@ -38,7 +38,7 @@ class AddSellingBookActivity : AppCompatActivity() {
         //override transition for circular reveal
         overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move)
 
-        accountDataObserver = AccountDataObserver(fetchUserDataEventListener)
+        val accountDataObserver = AccountDataObserver(fetchUserDataEventListener)
 
         rootLayout.visibility = View.INVISIBLE
 

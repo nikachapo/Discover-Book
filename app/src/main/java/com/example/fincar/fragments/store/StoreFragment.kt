@@ -46,8 +46,6 @@ class StoreFragment : BaseFragment() {
         sellingBooksObserver = SellingBooksObserver(fetchBooksEventListener)
         lifecycle.addObserver(sellingBooksObserver)
 
-
-
         viewModel.getSellingBooksLiveData().observe(viewLifecycleOwner, Observer {
             childFragmentManager.beginTransaction()
                 .replace(

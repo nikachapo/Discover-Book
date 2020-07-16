@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.net.http.SslError
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import android.webkit.SslErrorHandler
 import android.webkit.WebView
@@ -102,9 +103,9 @@ class PdfViewActivity : AppCompatActivity() {
             })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         bookRepository.update(book)
+        super.onSaveInstanceState(outState, outPersistentState)
     }
 
     override fun onBackPressed() {

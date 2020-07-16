@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public abstract class FirebaseDbHelper {
     public static final String USERS_KEY = "users";
     public static final String SELLING_BOOKS_KEY = "selling_books";
+    public static final String POSTS_KEY = "posts";
 
     private final DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
     private final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();

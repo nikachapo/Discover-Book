@@ -120,6 +120,7 @@ class SellingBookDetailsActivity : AppCompatActivity() {
         }
         binding.bottomSheetLayout.commentAddButton.setOnClickListener {
             viewModel.addComment(binding.bottomSheetLayout.commentBottomSheetEditText.text.toString())
+            binding.bottomSheetLayout.commentBottomSheetEditText.text.clear()
         }
         binding.buyButton.setOnClickListener {
             if ((sellingBook.count - sellingBook.soldCount) > 0) {

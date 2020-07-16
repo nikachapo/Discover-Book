@@ -1,11 +1,12 @@
 package com.example.fincar.app
 
-import android.animation.Animator
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.view.*
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -13,7 +14,6 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.fincar.R
 import com.example.fincar.extensions.setVisibilityWithAnim
 import com.example.fincar.fragments.DatePickerFragment
-import kotlinx.android.synthetic.main.activity_add_selling_book.*
 import kotlinx.android.synthetic.main.dialog_layout.*
 
 object Tools {
@@ -75,60 +75,5 @@ object Tools {
         }
 
         return dialog
-    }
-
-    fun startTransition(rootLayout: ViewGroup) {
-        val viewTreeObserver = rootLayout.viewTreeObserver
-        if (viewTreeObserver.isAlive) {
-            viewTreeObserver.addOnGlobalLayoutListener(object :
-                ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    circularRevealActivity(rootLayout)
-                    rootLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                }
-            })
-        }
-    }
-
-    fun startBackRevealTransition(rootLayout: ViewGroup, activity: Activity) {
-        val cx: Int = rootLayout.width
-        val cy: Int = rootLayout.bottom
-
-        val finalRadius: Float =
-            rootLayout.width.coerceAtLeast(rootLayout.height).toFloat()
-        val circularReveal =
-            ViewAnimationUtils.createCircularReveal(rootLayout, cx, cy, finalRadius, 0f)
-
-        circularReveal.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationEnd(animator: Animator) {
-                rootLayout.visibility = View.INVISIBLE
-                activity.finish()
-            }
-            override fun onAnimationStart(animator: Animator) {}
-            override fun onAnimationCancel(animator: Animator) {}
-            override fun onAnimationRepeat(animator: Animator) {}
-        })
-        circularReveal.duration = 1000
-        circularReveal.start()
-
-    }
-
-    private fun circularRevealActivity(rootLayout: ViewGroup) {
-        val cx: Int = rootLayout.right
-        val cy: Int = rootLayout.bottom
-
-        val finalRadius: Float =
-            rootLayout.width.coerceAtLeast(rootLayout.height).toFloat()
-
-        val circularReveal = ViewAnimationUtils.createCircularReveal(
-            rootLayout,
-            cx,
-            cy, 0f,
-            finalRadius
-        )
-
-        circularReveal.duration = 1000
-        rootLayout.visibility = View.VISIBLE
-        circularReveal.start()
     }
 }

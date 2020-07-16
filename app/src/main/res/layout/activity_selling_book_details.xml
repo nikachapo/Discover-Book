@@ -27,7 +27,7 @@
                 tools:context=".activities.selling_book_details.SellingBookDetailsActivity">
 
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/sellingBookDetailsPublisherImageView"
                     imageFromUrl="@{sellingBook.ownerProfileUrl}"
                     android:layout_width="50dp"

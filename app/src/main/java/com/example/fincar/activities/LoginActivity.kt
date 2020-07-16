@@ -39,8 +39,8 @@ class LoginActivity : AppCompatActivity() {
         )
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         splashIcon.animation = AnimationUtils
             .loadAnimation(applicationContext,
                 R.anim.slide_in_left
@@ -49,8 +49,8 @@ class LoginActivity : AppCompatActivity() {
         handler.postDelayed(runnable, 1000)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onPause() {
+        super.onPause()
         handler.removeCallbacks(runnable)
     }
 
@@ -65,7 +65,6 @@ class LoginActivity : AppCompatActivity() {
                 .setAvailableProviders(providers)
                 .setIsSmartLockEnabled(true) //set true to save credentials
                 .setTheme(R.style.AuthUiTheme)
-                .setLogo(R.mipmap.ic_launcher_round)
                 .build(),
             LOGIN_REQUEST
         )

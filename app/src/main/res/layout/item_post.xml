@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:padding="4dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/postOwnerImageView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -57,7 +57,7 @@
 
             <TextView
                 android:id="@+id/postTitleTV"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
@@ -84,6 +84,23 @@
                 tools:text="aspomavnienpienbposebnponeboneo"
                 android:textColor="@android:color/black"
                 android:textSize="20sp" />
+
+            <com.varunest.sparkbutton.SparkButton
+                android:id="@+id/starButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.984"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.285"
+                app:sparkbutton_activeImage="@mipmap/ic_clap_active"
+                app:sparkbutton_iconSize="40dp"
+                app:sparkbutton_inActiveImage="@mipmap/ic_clap_inactive"
+                app:sparkbutton_primaryColor="@android:color/holo_orange_dark"
+                app:sparkbutton_secondaryColor="@android:color/holo_red_dark" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

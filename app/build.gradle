@@ -95,7 +95,7 @@ android {
 
         //Room
         def room_version = "2.2.5"
-        implementation "androidx.room:room-runtime:$room_version"
+        implementation "androidx.room:room-ktx:$room_version"
         kapt "androidx.room:room-compiler:$room_version"
 
         //Retrofit
@@ -117,5 +117,6 @@ android {
         implementation 'com.github.kk121:File-Loader:1.2'
         implementation 'com.karumi:dexter:5.0.0'
 
+        implementation 'de.hdodenhof:circleimageview:3.1.0'
     }
 }

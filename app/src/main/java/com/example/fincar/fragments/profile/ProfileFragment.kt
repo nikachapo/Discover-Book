@@ -50,7 +50,6 @@ class ProfileFragment : Fragment() {
 
     private fun logOut() {
         val intent = Intent(requireContext(), LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         AuthUI.getInstance()
             .signOut(requireContext())
             .addOnSuccessListener {

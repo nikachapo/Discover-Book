@@ -1,7 +1,6 @@
 package com.example.fincar.book_db
 
 import android.app.Application
-import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fincar.app.App
@@ -9,6 +8,9 @@ import com.example.fincar.app.Tools.showToast
 import com.example.fincar.models.book.GoogleBook
 import com.example.fincar.network.books_api.BooksApiRequest
 import com.example.fincar.network.books_api.RequestCallBacks
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class BookRepository(application: Application?) {
@@ -25,23 +27,27 @@ class BookRepository(application: Application?) {
         if (application != null) {
             val database = BookDatabase.getBookDatabase(application)
             bookDao = database?.noteDao()
+
         }
+
+
     }
 
     fun insert(googleBook: GoogleBook) {
-        AsyncTask.execute {
+        CoroutineScope(Dispatchers.IO).launch {
             bookDao?.insert(googleBook)
         }
+
     }
 
-    fun update(googleBook: GoogleBook){
-        AsyncTask.execute {
+    fun update(googleBook: GoogleBook) {
+        CoroutineScope(Dispatchers.IO).launch {
             bookDao?.update(googleBook)
         }
     }
 
     fun delete(googleBook: GoogleBook) {
-        AsyncTask.execute {
+        CoroutineScope(Dispatchers.IO).launch {
             bookDao?.delete(googleBook)
         }
     }
@@ -67,6 +73,10 @@ class BookRepository(application: Application?) {
         })
     }
 
+    fun getBooksWithPDF(): LiveData<List<GoogleBook>> {
+        return bookDao!!.getBooksWithPDF()
+    }
+
     private fun addBooksToList(
         successJson: String,
         booksApiRequestCallBacks: RequestCallBacks
@@ -89,7 +99,7 @@ class BookRepository(application: Application?) {
                 if (volumeInfo.has("publisher"))
                     googleBook.publisher = volumeInfo.getString("publisher")
 
-                if(volumeInfo.has("publishedDate")) {
+                if (volumeInfo.has("publishedDate")) {
                     googleBook.publishDate = volumeInfo.getString("publishedDate")
                 }
 
@@ -110,17 +120,18 @@ class BookRepository(application: Application?) {
                     googleBook.categories = authorsJsonArray.join(", ")
                 }
 
-                if(volumeInfo.has("pageCount")) googleBook.pageCount = volumeInfo.getInt("pageCount")
+                if (volumeInfo.has("pageCount")) googleBook.pageCount =
+                    volumeInfo.getInt("pageCount")
                 googleBook.language = volumeInfo.getString("language")
                 val accessInfoJSONObject = bookJson.getJSONObject("accessInfo")
                 val pdfJSONObject = accessInfoJSONObject.getJSONObject("pdf")
                 googleBook.isPdfAvailable = pdfJSONObject.getBoolean("isAvailable")
 
                 if (googleBook.isPdfAvailable) {
-                    if(pdfJSONObject.has("downloadLink")) {
+                    if (pdfJSONObject.has("downloadLink")) {
                         googleBook.pdfLink = pdfJSONObject.getString("downloadLink")
-                    }else if(pdfJSONObject.has("acsTokenLink")){
-                            googleBook.pdfLink = pdfJSONObject.getString("acsTokenLink")
+                    } else if (pdfJSONObject.has("acsTokenLink")) {
+                        googleBook.pdfLink = pdfJSONObject.getString("acsTokenLink")
                     }
                 }
                 booksList.add(googleBook)
@@ -133,8 +144,6 @@ class BookRepository(application: Application?) {
         }
     }
 
-    fun getBooksWithPDF() : LiveData<List<GoogleBook>>{
-        return bookDao!!.getBooksWithPDF()
-    }
+
 }
 

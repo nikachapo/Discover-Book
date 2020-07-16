@@ -10,6 +10,7 @@ import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.fincar.R
+import com.example.fincar.activities.LoginActivity
 import com.example.fincar.app.Tools
 import com.example.fincar.app.Tools.showToast
 import com.example.fincar.models.Account
@@ -19,7 +20,9 @@ import com.example.fincar.network.firebase.upload.UploadDataCallbacks
 import com.example.fincar.network.firebase.upload.Uploader
 import com.example.fincar.network.firebase_storage.FirebaseStorageHelper
 import com.example.fincar.network.firebase_storage.UploadFileListener
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_registration.*
 import java.text.DateFormat
 import java.util.*
@@ -74,21 +77,23 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             Tools.showDatePickerDialog(supportFragmentManager)
         }
 
+        binding.registrationBackButton.setOnClickListener{
+            if(currentAccount == null){
+                logOut()
+            }else{
+                onBackPressed()
+            }
+        }
+
         binding.saveButton.setOnClickListener {
 
             if (isEveryFieldValid()) {
                 if (currentAccount == null) {
                     registerAccount()
-                } else {
-                    updateAccountData()
                 }
             }
 
         }
-    }
-
-    private fun updateAccountData() {
-        //TODO create update data function
     }
 
     private fun isEveryFieldValid(): Boolean {
@@ -178,6 +183,16 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             finish()
         }
 
+    }
+
+    private fun logOut() {
+        val intent = Intent(this, LoginActivity::class.java)
+        AuthUI.getInstance()
+            .signOut(this)
+            .addOnSuccessListener {
+                startActivity(intent)
+                finish()
+            }
     }
 
     companion object {

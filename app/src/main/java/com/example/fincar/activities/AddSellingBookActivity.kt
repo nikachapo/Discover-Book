@@ -35,14 +35,7 @@ class AddSellingBookActivity : AppCompatActivity() {
         currentDateString =
             DateFormat.getDateInstance().format(Calendar.getInstance().time)
 
-        //override transition for circular reveal
-        overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move)
-
         val accountDataObserver = AccountDataObserver(fetchUserDataEventListener)
-
-        rootLayout.visibility = View.INVISIBLE
-
-        Tools.startTransition(rootLayout)
 
         lifecycle.addObserver(accountDataObserver)
 
@@ -137,10 +130,6 @@ class AddSellingBookActivity : AppCompatActivity() {
             sellingBookImageView.loadImage(imageUri)
         }
 
-    }
-
-    override fun onBackPressed() {
-        Tools.startBackRevealTransition(rootLayout, this)
     }
 
 }

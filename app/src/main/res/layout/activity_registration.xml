@@ -15,6 +15,7 @@
         android:background="@mipmap/bg_triangles">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/registrationBackButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
@@ -57,7 +58,7 @@
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal">
 
-                        <ImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/profileImageView"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"

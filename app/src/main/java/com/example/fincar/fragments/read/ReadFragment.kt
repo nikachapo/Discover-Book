@@ -44,7 +44,7 @@ class ReadFragment : Fragment() {
                         }
                     )
                 )
-                .commit()
+                .commitAllowingStateLoss()
         })
         return inflater.inflate(R.layout.fragment_read, container, false)
     }

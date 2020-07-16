@@ -21,8 +21,6 @@
             android:orientation="vertical"
             tools:context=".fragments.profile.ProfileFragment">
 
-
-
             <TextView
                 android:id="@+id/balanceTV"
                 android:layout_width="wrap_content"
@@ -38,7 +36,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout"
                 tools:text="1000$" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView"
                 imageFromUrl="@{userModel.imageUrl}"
                 android:layout_width="100dp"
@@ -115,17 +113,6 @@
                     android:textColor="@android:color/black"
                     android:gravity="center"
                     android:text="@{String.valueOf(userModel.purchasedBooksCount) + `\n` + `Purchased`}" />
-
-<!--                <TextView-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:gravity="center"-->
-<!--                    tools:text="4 \n Reviews"-->
-<!--                    android:textColor="@android:color/black"-->
-<!--                    android:textSize="20sp"-->
-<!--                    android:text="@{String.valueOf(userModel.reviewsCount) + `\n` + `Reviews`}" />-->
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -168,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sign_out"
                 android:textAllCaps="false"
+                android:textSize="20sp"
                 android:gravity="center_vertical"
                 android:background="@android:color/transparent"
                 android:drawableStart="@mipmap/ic_logout"
